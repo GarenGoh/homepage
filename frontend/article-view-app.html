@@ -1,0 +1,177 @@
+ <!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- build:css /styles/app.css -->
+    <link rel="stylesheet" href="styles/bootstrap.css">
+    <link rel="stylesheet" href="vendor/bower/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="styles/app.css">
+    <!-- endbuild -->
+    <title>Base</title>
+  </head>
+  <body>
+    <nav id="app-top">
+      <div class="top">
+        <div class="logo">
+          <img src="images/logo.png">
+        </div>
+      </div>
+      <div class="item" id="navbar">
+        <ul>
+          <li class="nav pull-left"><a href="#">首页</a></li>
+          <li class="nav pull-left"><a href="#" >PHP</a></li>
+          <li class="nav pull-left"><a href="#" >前端</a></li>
+          <li class="nav pull-left"><a href="#" >关于我</a></li>
+          <li class="nav pull-right"><a href="#" class="login">注册</a></li>
+          <li class="nav pull-right"><a href="#" class="login">登录</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="content-wrapper container" id="article-view">
+      <div class="col-md-12 nav">
+        <p class="">
+          <a class="pull-left home" >网站首页</a>
+          <a class="pull-left cate" >PHP</a>
+          <span class="pull-right motto">天不随我意，我欲封天，唯一死尔！</span>
+        </p>
+      </div>
+      <div class="col-md-9 article">
+        <h3 class="title">帝国cms常用标签调用方法总结（不得不收藏哦）</h3>
+        <p class="article-info">发布时间：2014-10-18&nbsp;&nbsp;&nbsp;编辑：杨青&nbsp;&nbsp;&nbsp;阅读（38047）</p>
+        <div class="content">
+          <p>昨天一个在新浪工作的朋友问我，应不应该去参加 GM*C （全球移动***大会），我跟他说，如果你们公司报销，你工作又不太饱和，可以去逛逛。</p>
+          <p>互联网行业是一个工作强度比任何行业都高的行业，互联网从业者，尤其是创业公司的从业者，每天连睡眠的时间都不够，与其挤出时间去参加各种行业大会，不如多留出点时间工作、学习，或陪伴家人。</p>
+          <p>不能一杆子打翻一船人，有些线下活动还是值得参与的。</p>
+          <p>2010 年，极客公园成立，同年10月，我在极客公园组织了第一场线下活动，直到2014年初我离开，我经手的活动大大小小有将近100场，从10多人到2000人规模，从工作坊到大会到展会。</p>
+          <p>也因工作原因，参加过 MWC（世界移动通信大会）、Google I/O 等国际性活动。</p>
+          <p data-align="center"><img data-image-size="640,334" src="https://dn-sdkcnssl.qbox.me/editor/AaivhJObp-pDXNrsQICE.jpg"></p>
+          <p>这篇文章将结合我的经验告诉你，如何判断一个活动是否值得参加。</p>
+          <p><strong>1</strong></p>
+          <p>活动质量与参会人数成反比。这是判断一个活动是否值得参加的基本原则，2个人对话，沟通效果最好，双方获得最多。3个人，效果差一点，10个人一张圆桌，效果又差一点，2000 人一场大会，效果就极差了。</p>
+          <p><strong>2</strong></p>
+          <p>越是大会，付费演讲越多，内容越渣。一场大型活动，比如1000人规模、2天，主办方可能需要付出100 - 300万的费用来搭建场地，这些费用不可能由参会者承担。那么，只能由赞助商来承担。有钱的赞助商不认可展位的价值，主办方也知道这一点，于是就售卖演讲席位。90% 以上的活动主办方都没有认真去控制赞助商演讲的水分，这样的活动，内容除了渣还是渣。</p>
+          <p><strong>3</strong></p>
+          <p>每一场大会，基本上都会有线上直播和会后报道，大城市，尤其是北京，交通成本极高，何必要到现场坐一张屁股一整天都不舒服的椅子，参加内容在会后就会立马发布的活动？相信我，越是大型的活动，新闻稿会越快发出来，你真的不差那10分钟-半小时的时间，在家/办公室静静等待新闻稿就行。而视频，一般在当天也会发布出来。</p>
+          <p><strong>4</strong></p>
+          <p>讲融资、讲营销之类话题的超过100人规模的活动，基本上不值得参加，在现场你可能觉得听得津津有味，实际上演讲者都在和听众讲故事，你回到公司后，之前不知道如何入手，现在还是无从下手。</p>
+          <p><strong>5</strong></p>
+          <p>以演讲为主且活动名带「全球」「中国」「亚洲」「峰会」字眼的，一般不值得参加。因为这些活动都是围绕一个大的领域展开，大领域意味着不专注。你是个金融产品的产品经理，就应该去参加金融方面的活动，你是个前端工程师，就应该去参加开发者活动，你去一个「全球椅子坐着不舒服论坛」不是没有收获，而是这些收获你明明可以等活动结束后，在线获得。</p>
+          <p><strong>6</strong></p>
+          <p>那些演讲嘉宾里，投资人特别多的活动，慎重选择参加。因为不够坚定的创业者参加这样的活动，很容易被忽悠。 VC 们说什么是风口，可能你就去针对风口创业；VC 们说最近资本寒冬，可能你就赶紧压低价格融资；VC 们有的说看好 VR，有些说不看好，你心里的小鹿可能就横冲直撞了。</p>
+          <p><strong>7</strong></p>
+          <p>有现场直播、会后报道的活动，一般干货很少。你可以设想一下，如果你是演讲者，你会在一个面向全球直播的活动上，分享你如何把用户量从0做到1000万的窍门么？你肯定不会。</p>
+          <p><strong>8</strong></p>
+          <p>免费的活动，谨慎选择参加。如果你是一场活动的演讲人，活动主办方没给你演讲费，参会者也是免费来听，你准备为听众提供多高质量的内容？你为什么要给他们免费的知识？但还是要演讲啊，怎么办？讲广告吧，讲我们的产品有多牛吧，做做 PR 吧。</p>
+          <p><strong>9</strong></p>
+          <p>如果一个演讲者频繁出现在不同的活动，他的演讲你可以略过或不参加。因为一个人一年能分享的话题基本上只有一两个，如果超过两个，意味着他在这个话题上并没有深入研究，没有深入研究就很难分享出干货。而一般来说，如果他今年已经分享过 2 个话题了，你都能在网上找到他的分享，别去线下活动浪费时间和交通费了。</p>
+          <p><strong>10</strong></p>
+          <p>在北上深杭（广州活动少了些）交通成本是极其高昂的，这里成本指的是时间。如果一场活动没有提供独特的价值，在家等报道是最佳选择。所谓独特的价值就是你无法在线上获得参会所得。比如展会，你能看到实体的产品。这在线上无法实现。</p>
+          <p><strong>11</strong></p>
+          <p>有人说，去线下活动主要是为了认识人。按照第1点原则吧，越小的活动，你越容易认识朋友。在大型活动上，你貌似可以和很多人换名片，但这些人跟你会有进一步的交流么？我家有数千张以前参加各种活动的名片，我全都扔一边，不会翻第二次。</p>
+          <p><strong>12</strong></p>
+          <p>工作坊形式的活动，值得去参加。工作坊形式的活动，一般每个人都要动手参与其中，与小组的人认识，也通过自主学习，获得知识提升。这种参与感，线上无法提供，也就是说，它提供了独特的价值。</p>
+          <p><strong>13</strong></p>
+          <p>只针对某一细分领域的活动，值得参加。比如「『PHP 是最好的语言』大会」，这种活动值得参加，如果你是一个 PHP 开发者，你能找到同行，切磋也好、合作也好、学习也好。</p>
+          <p><strong>14</strong></p>
+          <p>硬件展会值得参加。道理和前面提到的一样，线上视频无法提供线下展会带来的价值，你能在展会上看到实体产品、能与厂商谈合作、能看到最新的科技趋势。</p>
+          <p><strong>15</strong></p>
+          <p>不提供直播和会后报道的活动值得参加，这句是废话，不解释了。</p>
+          <p><strong>16</strong></p>
+          <p>企业产品发布会值不值得去？这要分3种情况。如果你是这个产品的忠实粉丝，甚至已经到了脑残粉的级别，那应该去。就像你一定要去张学友的演唱会，而不仅仅买一张 CD 一样。</p>
+          <p><strong>17</strong></p>
+          <p>如果你是个没什么追求的记者，值得去。因为有车马费。据我所知，目前行情均价是 500元，与企业搞好关系，年底还有可能出国旅游。</p>
+          <p><strong>18</strong></p>
+          <p>如果你是个对新产品只是有所期待的用户，那别浪费时间和交通费，一般在发布会结束的10分钟内，新闻稿就会出来，相关的视频也会在当天放出。你不必着急比别人快10分钟知道产品是卖1999，还是名称后多了个 s。同理，熬夜看苹果发布会的必要性也不高。</p>
+          <p><strong>19</strong></p>
+          <p>收费的培训可以择优参加。获得体系化的知识有两种方法，一种是你通过各种方式，比如互联网、和他人聊天，学到各个知识点，通过思考，形成知识体系。另一种是，让别人教你。知识是值得付费的。</p>
+          <p><strong>20</strong></p>
+          <p>这种骗人的活动，告诉你身边的朋友，千万别去参加：</p>
+          <p data-align="center"><img data-image-size="640,569" src="https://dn-sdkcnssl.qbox.me/editor/5PDwFU9BzrHYuldJ1HQ0.jpg">
+            <br>
+          </p>
+          <p><strong>21</strong></p>
+          <p>这个公众号从来不打广告，今天给自己打个广告，关于如何组织一场出色的线下活动，不久前朱峰老师咨询过我，完了他说我应该在「在行」上开个课程，于是我开了。点阅读原文可以到这个页面。</p>
+        </div>
+      </div>
+      <div class="col-md-3 secondary-block">
+        <div class="hot-article col-md-12">
+          <div class="head col-md-6">
+            <h3>热门文章</h3>
+          </div>
+          <div class="col-md-12 body">
+            <ul class="clone" clone="7">
+              <li>博客中百度链接自动提交用到了</li>
+            </ul>
+          </div>
+        </div>
+        <div class="article-tag col-md-12">
+          <div class="head col-md-6">
+            <h3>热门标签</h3>
+          </div>
+          <div class="col-md-12 body"></div>
+          <div class="containe" style="margin-top: 30px;">
+            <div class="hex" style="background: #986625;">
+              <p  class="h3" style="color: #fff;margin: 0">php</p>
+              <a href="#"></a>
+              <div class="corner-1"></div>
+              <div class="corner-2"></div>
+            </div>
+            <div class="hex" style="background: #138898;">
+              <h6 style="color: #fff;margin: 0;width: 32px;">JavaScripts</h6>
+              <a href="#"></a>
+              <div class="corner-1"></div>
+              <div class="corner-2"></div>
+            </div>
+            <div class="hex" style="background: #49980c;">
+              <a href="#"></a>
+              <div class="corner-1"></div>
+              <div class="corner-2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="container" id="app-footer">
+      <div class="col-md-4" >
+        <ul>
+          <li style="font-size: 20px;list-style-type: none;margin-bottom: 60px;"><a href="#">关于我</a></li>
+          <li style="font-size: 20px;list-style-type: none;"><a href="#">联系我</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4 hot">
+        <p > 热门标签：</p>
+        <ul class="clone" clone="7">
+          <li><a href="javascript:void(0)">Yii</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4 friendly-link">
+        <p> 友情链接：</p>
+        <ul class="clone" clone="7">
+          <li><a href="#">服务器</a></li>
+        </ul>
+      </div>
+    </footer>
+    <!-- build:js /scripts/app.js -->
+    <script src="vendor/bower/jquery/dist/jquery.js"></script>
+    <script src="vendor/bower/bootstrap/js/transition.js"></script>
+    <script src="vendor/bower/bootstrap/js/modal.js"></script>
+    <script src="vendor/bower/bootstrap/js/carousel.js"></script>
+    <script src="vendor/bower/bootstrap/js/collapse.js"></script>
+    <script src="vendor/bower/bootstrap/js/button.js"></script>
+    <script src="vendor/bower/bootstrap/js/dropdown.js"></script>
+    <script src="vendor/bower/bootstrap/js/tab.js"></script>
+    <script src="vendor/bower/bootstrap/js/tooltip.js"></script>
+    <script src="vendor/bower/bootstrap/js/popover.js"></script>
+    <script src="vendor/bower/bootstrap-extension/dist/js/bootstrap-extension.js"></script>
+    <!-- endbuild -->
+    <script src="scripts/tool.js"></script>
+    <script>
+      Tool.cloneHtml();
+      $('.article-tag').sticky({
+        'top': 0
+      });
+    </script>
+  </body>
+</html>

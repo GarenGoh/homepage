@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/favicon.ico">
+    <title>主页</title>
+    <!-- build:css /styles/app.css -->
+    <link rel="stylesheet" href="styles/bootstrap.css">
+    <link rel="stylesheet" href="vendor/bower/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="vendor/bower/simditor/styles/simditor.css">
+    <link rel="stylesheet" href="vendor/bower/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="vendor/bower/selectize/dist/css/selectize.bootstrap3.css">
+    <link rel="stylesheet" href="styles/admin.css">
+    <link rel="stylesheet" href="styles/app.css">
+    <!-- endbuild -->
+  </head>
+  <body>
+    <div id="app-top">
+      <div class="top">
+        <div class="logo">
+          <img src="images/logo.png">
+        </div>
+      </div>
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <!-- 手机端会把导航装进集装箱 -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Garen's blog</a>
+          </div>
+          <!-- 导航条内容 -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">PHP <span class="sr-only">(current)</span></a></li>
+              <li><a href="#">数据库</a></li>
+              <li><a href="#">Linux</a></li>
+              <li><a href="#">便签</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">其他博文 <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">前端</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#">学无止境</a></li>
+                </ul>
+              </li>
+              <li><a href="#">关于</a></li>
+            </ul>
+            <form class="navbar-form navbar-left pc-right" role="search">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search">
+              </div>
+              <button type="submit" class="btn btn-default">搜索</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <!--主页内容-->
+    <div class="content-wrapper container" id="app-home">
+      <div class="col-md-9 primary-block">
+        <!--幻灯片-->
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+          </ol>
+              <!--幻灯片主体内容-->
+          <div class="carousel-inner sparkly" role="listbox">
+            <div class="item active">
+              <a href="#"><img src="/images/06.jpg" alt=""></a>
+              <div class="carousel-caption slide-text">
+                <h3><a href="#" class="slide-title">绘的那般令人向往</a></h3>
+                <p><a href="#" class="slide-summary">在现代发达社会中，作为社会和政治媒介，大众传媒被赋予了很大的权力。</a></p>
+              </div>
+            </div>
+            <div class="item">
+              <a href="#"><img src="/images/01.jpg" alt=""></a>
+              <div class="carousel-caption slide-text">
+                <h3><a href="#" class="slide-title">绘的那般令人向往</a></h3>
+                <p><a href="#" class="slide-summary">在现代发达社会中，作为社会和政治媒介，大众传媒被赋予了很大的权力。</a></p>
+              </div>
+            </div>
+          </div>
+          <!--幻灯片上下页按钮-->
+          <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <i class="fa fa-chevron-left"></i>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+            <i class="fa fa-chevron-right"></i>
+            <span class="sr-only">next</span>
+          </a>
+        </div>
+        <!--首页文章列表-->
+        <div class="article">
+          <div class="article-top">
+            <h4>最新文章 <small class="pull-right"><a href="#">最新文章</a></small></h4>
+          </div>
+          <div class=" clone" clone="6">
+            <article>
+              <div class="left">
+                <a href="#"><img src="images/06.jpg"></a>
+              </div>
+              <div class="right">
+                <a href="#">
+                  <h4>安装PHP的curl扩展安装PHP的扩展安装PHP的扩展安装PHP的curl扩展扩展扩展</h4>
+                  <span class="small pull-left eye pc-hide"><i class="fa fa-leaf leaf "></i> php学习</span>
+                  <span class="small pull-right clock pc-hide"><i class="fa fa-eye eye"></i>&nbsp;&nbsp;323</span>
+                </a>
+                <p class="summary">中百度链接自动百度链接自动提交用到了curl，而自己安装PHP的时候并没有安装curl模块。通过查询PHP官方文档，得知编译PHP的时候需要带上-with-curl参数，才可以把curl模块编译进去。但是…</p>
+                <p class="phone-hide">
+                <i class="fa fa-leaf leaf"></i> php学习&nbsp;&nbsp;&nbsp;
+                <i class="fa fa-clock-o clock"></i> 2016-04-04&nbsp;&nbsp;&nbsp;
+                <i class="fa fa-comment-o comment"></i> 评论（32）&nbsp;&nbsp;&nbsp;
+                <i class="fa fa-eye eye"></i>浏览（323）&nbsp;&nbsp;&nbsp;
+                <a class="pull-right" href="#">阅读原文>></a>
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 second-block">
+        <div class="follow ">
+          <div class="head">
+            <h4>关注我</h4>
+          </div>
+          <div class="body">
+            <div class=" item">
+                <i class="fa fa-github"></i>
+              <p class="sparkly-p"><a href="#">GitHub</a></p>
+            </div>
+            <div class=" item">
+              <i class="fa fa-weibo" style="color: #FE2A27;"></i>
+              <p class="sparkly-p"><a href="#">微 博</a></p>
+            </div>
+            <div class=" item" id="wechat-panel">
+              <i class="fa fa-wechat" style="color: #3DAF36;"></i>
+              <p class="sparkly-p "><a href="#">微 信</a></p>
+            </div>
+            <div class=" item">
+              <i class="fa fa-envelope-o" style="color: #FFB902;"></i>
+              <p class="sparkly-p"><a href="#">邮 箱</a></p>
+            </div>
+            <div class="my-avatar">
+              <a href="#"><img src="/images/02.jpg"></a>
+            </div>
+            <div class="my-summary">
+              <p>网名：<small>Garen.Goh</small></p>
+              <p>职业：<small>PHP工程师</small></p>
+              <p>主页：<small>wqiang.net</small></p>
+              <p>现居：<small>北京.海淀</small></p>
+              <p>格言：<small>努力让自己吊到爆</small></p>
+            </div>
+          </div>
+        </div>
+        <div class="hot-article">
+          <ul class="nav nav-tabs head" role="tablist">
+            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">热门文章</a></li>
+            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">站长推荐</a></li>
+          </ul>
+          <div class="tab-content body">
+            <div role="tabpanel" class="tab-pane active" id="home">
+              <ul>
+                <li class="title"><a href="#"><i class="fa fa-hand-o-right"></i> 努力让自己吊到爆努力让自己吊到爆努力让自己吊到爆努力让自己吊到爆</a></li>
+                <li class="title"><a href="#"><i class="fa fa-hand-o-right"></i> 努力让自己吊到爆努力让自己吊到爆努力让自己吊到爆努力让自己吊到爆</a></li>
+                <li class="title"><a href="#"><i class="fa fa-hand-o-right"></i> 努力让自己吊到爆努力让自己吊到爆努力让自己吊到爆努力让自己吊到爆</a></li>
+                <li class="title"><a href="#"><i class="fa fa-hand-o-right"></i> 努力让自己吊到爆努力让自己吊到爆努力让自己吊到爆努力让自己吊到爆</a></li>
+                <li class="title"><a href="#"><i class="fa fa-hand-o-right"></i> 努力让自己吊到爆努力让自己吊到爆努力让自己吊到爆努力让自己吊到爆</a></li>
+                <li class="title"><a href="#"><i class="fa fa-hand-o-right"></i> 努力让自己吊到爆努力让自己吊到爆努力让自己吊到爆努力让自己吊到爆</a></li>
+              </ul>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="profile">
+              <ul>
+                <li class="title"><a href="#"><i class="fa fa-hand-o-right"></i> 努力让自己吊到爆努力让自己吊到爆努力让自己吊到爆努力让自己吊到爆</a></li>
+                <li class="title"><a href="#"><i class="fa fa-hand-o-right"></i> 努力让自己吊到爆努力让自己吊到爆努力让自己吊到爆努力让自己吊到爆</a></li>
+                <li class="title"><a href="#"><i class="fa fa-hand-o-right"></i> 努力让自己吊到爆努力让自己吊到爆努力让自己吊到爆努力让自己吊到爆</a></li>
+                <li class="title"><a href="#"><i class="fa fa-hand-o-right"></i> 努力让自己吊到爆努力让自己吊到爆努力让自己吊到爆努力让自己吊到爆</a></li>
+                <li class="title"><a href="#"><i class="fa fa-hand-o-right"></i> 努力让自己吊到爆努力让自己吊到爆努力让自己吊到爆努力让自己吊到爆</a></li>
+                <li class="title"><a href="#"><i class="fa fa-hand-o-right"></i> 努力让自己吊到爆努力让自己吊到爆努力让自己吊到爆努力让自己吊到爆</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="hot-tag">
+          <div class="head">
+            <h4>热门标签</h4>
+          </div>
+          <div class="body">
+            <div class="containe" style="margin-top: 30px;">
+              <div class="hex" style="background: #986625;">
+                <p  class="h3" style="color: #fff;margin: 0">php</p>
+                <a href="#"></a>
+                <div class="corner-1"></div>
+                <div class="corner-2"></div>
+              </div>
+              <div class="hex" style="background: #138898;">
+                <h6 style="color: #fff;margin: 0;width: 32px;">JavaScripts</h6>
+                <a href="#"></a>
+                <div class="corner-1"></div>
+                <div class="corner-2"></div>
+              </div>
+              <div class="hex" style="background: #49980c;">
+                <a href="#"></a>
+                <div class="corner-1"></div>
+                <div class="corner-2"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="friendly">
+          <div class="head">
+            <h4>友情链接:</h4>
+          </div>
+          <div class="body">
+            <ul>
+              <li><a href="">友链是打</a></li>
+              <li><a href="">死车</a></li>
+              <li><a href="">车</a></li>
+              <li><a href="">友链死</a></li>
+              <li><a href="">友链死</a></li>
+              <li><a href="">友链死的救</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <footer class="content-wrapper container" id="app-footer">
+      <div class="col-md-4 ">
+        <a href="http://www.miitbeian.gov.cn/">京ICP备16014638号-1</a>
+      </div>
+      <div class="col-md-4 ">
+        <a href="http://wqiang.net/">Garen.Goh个人博客</a> 内容版权所有，同时保留所有权利。
+      </div>
+      <div class="col-md-4 friendly-link">
+        <p> 友情链接：<small><a href="https://www.sdk.cn/" target="_blank">SDK.cn</a><a href="http://xiajie.me/" target="_blank">Jerry's Blog</a></small></p>
+      </div>
+    </footer>
+
+    <!-- build:js /scripts/app.js -->
+    <script src="vendor/bower/jquery/dist/jquery.js"></script>
+    <!--<script src="scripts/yii.js"></script>-->
+
+    <script src="vendor/bower/jquery-ui/ui/widget.js"></script>
+    <script src="vendor/bower/blueimp-file-upload/js/jquery.fileupload.js"></script>
+
+    <script src="vendor/bower/bootstrap/js/carousel.js"></script>
+    <script src="vendor/bower/bootstrap/js/button.js"></script>
+    <script src="vendor/bower/bootstrap/js/tooltip.js"></script>
+    <script src="vendor/bower/bootstrap/js/popover.js"></script>
+    <script src="vendor/bower/bootstrap/js/tab.js"></script>
+    <script src="vendor/bower/bootstrap/js/scrollspy.js"></script>
+    <script src="vendor/bower/bootstrap/js/collapse.js"></script>
+    <script src="vendor/bower/bootstrap/js/dropdown.js"></script>
+
+    <script src="vendor/bower/simple-module/lib/module.js"></script>
+    <script src="vendor/bower/simple-hotkeys/lib/hotkeys.js"></script>
+    <script src="vendor/bower/simple-uploader/lib/uploader.js"></script>
+    <script src="vendor/bower/simditor/lib/simditor.js"></script>
+
+    <script src="vendor/bower/bootstrap-extension/dist/js/bootstrap-extension.js"></script>
+
+    <script src="vendor/bower/microplugin/src/microplugin.js"></script>
+    <script src="vendor/bower/sifter/sifter.js"></script>
+    <script src="vendor/bower/selectize/dist/js/selectize.js"></script>
+
+    <script src="scripts/tool.js"></script>
+    <script src="scripts/index.js"></script>
+    <script src="scripts/rbeix.js"></script>
+    <!-- endbuild -->
+    <script>
+      Tool.cloneHtml();
+      $('#wechat-panel').popover({
+        'trigger': 'hover',
+        'html': true,
+        'placement': 'top',
+        'title': '添加我为微信好友',
+        'content': '<img src="/images/02.jpg" style="height: 150px;width: 150px">'
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,130 @@
+//这里是自己写的mixin
+/*
+ *六边形蜂窝标签
+ */
+.hexagon(@width; @height; @hex-height;) {
+  .containe {
+    font-family: 'Times New Roman','Microsoft YaHei','New York', serif, Times, TimesNR;
+    width: @width;
+    height:@height;
+    position: absolute;
+    padding: 10px 0;
+    overflow: auto;
+  }
+  .hex {
+    width:(@hex-height*1.732);
+    height:@hex-height ;
+    background-repeat:no-repeat;
+    background-position:50% 50%;
+    -webkit-background-size:auto (2*@hex-height+1);
+    -moz-background-size:auto (2*@hex-height+1);
+    -ms-background-size:auto (2*@hex-height+1);
+    -o-background-size:auto (2*@hex-height+1);
+    position:relative;
+    float:left;
+    margin:(0.29*@hex-height) (0.0581*@hex-height);
+    text-align:center;
+    zoom:1;
+    transition:all 0.5s ease-in-out;
+    -moz-transition:all 0.5s ease-in-out;
+    -o-transition:all 0.5s ease-in-out;
+    -moz-transition:all 0.5s ease-in-out;
+    -webkit-transition:all 0.5s ease-in-out;
+    &:hover {
+      transform:rotate(360deg);
+      -webkit-transform:rotate(360deg);
+      -moz-transform:rotate(360deg);
+      -o-transform:rotate(360deg);
+      -ms-transform:rotate(360deg);
+    }
+    a {
+      display:block;
+      width:100%;
+      height:100%;
+      color: #fff;
+      margin: 0 auto;
+      position:absolute;
+      top:0;
+      left:0;
+      &:hover {
+        text-decoration:none;
+      }
+    }
+    .corner-1, .corner-2 {
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background:inherit;
+      z-index:-2;
+      overflow:hidden;
+      -webkit-backface-visibility:hidden;
+      -moz-backface-visibility:hidden;
+      -ms-backface-visibility:hidden;
+      -o-backface-visibility:hidden;
+      backface-visibility:hidden;
+      &:before {
+        width:(2*@hex-height+1);
+        height:(2*@hex-height+1);
+        content:'';
+        position:absolute;
+        background:inherit;
+        top:0;
+        left:0;
+        z-index:1;
+        background:inherit;
+        background-repeat:no-repeat;
+        -webkit-backface-visibility:hidden;
+        -moz-backface-visibility:hidden;
+        -ms-backface-visibility:hidden;
+        -o-backface-visibility:hidden;
+        backface-visibility:hidden;
+      }
+    }
+    .corner-1 {
+      z-index:-1;
+      -webkit-transform:rotate(60deg);
+      -moz-transform:rotate(60deg);
+      -ms-transform:rotate(60deg);
+      -o-transform:rotate(60deg);
+      transform:rotate(60deg);
+      &:before {
+        -webkit-transform:rotate(-60deg) translate((@hex-height+1), 0px);
+        -moz-transform:rotate(-60deg) translate((@hex-height+1), 0px);
+        -ms-transform:rotate(-60deg) translate((@hex-height+1), 0px);
+        -o-transform:rotate(-60deg) translate((@hex-height+1), 0px);
+        transform:rotate(-60deg) translate((@hex-height+1), 0px);
+        -webkit-transform-origin:0 0;
+        -moz-transform-origin:0 0;
+        -ms-transform-origin:0 0;
+        -o-transform-origin:0 0;
+        transform-origin:0 0;
+      }
+    }
+    .corner-2 {
+      -webkit-transform:rotate(-60deg);
+      -moz-transform:rotate(-60deg);
+      -ms-transform:rotate(-60deg);
+      -o-transform:rotate(-60deg);
+      transform:rotate(-60deg);
+      &:before {
+        -webkit-transform:rotate(60deg) translate(-(0.55813*@hex-height), -(0.1279*@hex-height));
+        -moz-transform:rotate(60deg) translate(-(0.55813*@hex-height), -(0.1279*@hex-height));
+        -ms-transform:rotate(60deg) translate(-(0.55813*@hex-height), -(0.1279*@hex-height));
+        -o-transform:rotate(60deg) translate(-(0.55813*@hex-height), -(0.1279*@hex-height));
+        transform:rotate(60deg) translate(-(0.55813*@hex-height), -(0.1279*@hex-height));
+        bottom:0;
+      }
+    }
+  }
+  .hex-half {
+    margin-left:@hex-height ;
+  }
+  .hex-half-neg {
+    margin-left:-(@hex-height - 5px);
+  }
+  .hex-one {
+    margin-left:(@hex-height*2 - 3px);
+  }
+}

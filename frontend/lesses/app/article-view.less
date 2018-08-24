@@ -1,0 +1,105 @@
+#article-view {
+  .nav {
+    p {
+      border-bottom:solid 1px #eee;
+      height: 40px;
+      a {
+        color: #fff;
+        height: 40px;
+        width: 100px;
+        font: 12px sans-serif;
+        padding-top: 14px;
+        text-align: center;
+      }
+      .home {
+        background: #5EA51B;
+      }
+      .cate {
+        background: #8ddf5d;
+      }
+      .motto {
+        color: #999;
+        padding: 26px;
+        font-size: 12px;
+      }
+    }
+  }
+  .article {
+    padding: 0;
+    @media screen and (min-width: @screen-md) {
+      padding-right: 40px;
+      background: repeat-y right url("/images/default/r_line.jpg");
+    }
+    .title {
+      text-align: center
+    }
+    .article-info {
+      border: dashed 1px #ccc;
+      text-align: center;
+      color: #aaa;
+      margin-right: 8px;
+    }
+    .content{
+      margin-top: 30px;
+      pre {
+        background-color: #B5B5B5;
+        border-radius: 3px;
+      }
+      code {
+        word-break: break-all;
+      }
+      img {
+        max-width: 100%;
+      }
+    }
+  }
+  .secondary-block {
+    font-family: 'Times New Roman','Microsoft YaHei','New York', serif, Times, TimesNR;
+    .hot-article {
+      .head {
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+        padding: 0;
+        background: #FB4F4F;
+        .title {
+          margin: 4px 6px 1px;
+        }
+      }
+      .body {
+        border-top: #FB4F4F 1px solid;
+        padding: 0;
+        ul {
+          padding:20px 0;
+          li {
+            list-style-type:none;
+            border-bottom: solid 1px #ddd;
+            a {
+              padding-bottom: 4px;
+              padding-top: 10px;
+              display:block
+            }
+            &:hover {
+              border-bottom: solid 1px #777;
+            }
+          }
+        }
+      }
+    }
+    .article-tag {
+      padding: 0;
+      .head {
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+        padding: 0;
+        background: #ddd;
+        .title {
+          margin: 4px 6px 1px;
+        }
+      }
+      .body {
+        border-top: #ddd 1px solid;
+      }
+      .hexagon(250px;500px;32px);
+    }
+  }
+}

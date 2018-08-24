@@ -1,0 +1,112 @@
+ <!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- build:css /styles/app.css -->
+    <link rel="stylesheet" href="styles/bootstrap.css">
+    <link rel="stylesheet" href="vendor/bower/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="styles/admin.css">
+    <link rel="stylesheet" href="styles/app.css">
+    <!-- endbuild -->
+    <title>Base</title>
+  </head>
+  <body>
+    <nav id="app-top">
+      <div class="top">
+        <div class="logo">
+          <img src="images/logo.png">
+        </div>
+      </div>
+      <div class="item" id="navbar">
+        <ul>
+          <li class="nav pull-left"><a href="#">首页</a></li>
+          <li class="nav pull-left"><a href="#" >PHP</a></li>
+          <li class="nav pull-left"><a href="#" >前端</a></li>
+          <li class="nav pull-left"><a href="#" >关于我</a></li>
+          <li class="nav pull-right"><a href="#" class="login">注册</a></li>
+          <li class="nav pull-right"><a href="#" class="login">登录</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="content-wrapper container" id="article-index">
+        <div class="col-md-9 primary-block">
+          <div class="h1 category">
+            PHP
+          </div>
+          <div class="clone" clone="12">
+            <article class="col-md-12">
+              <div class="pull-left left">
+                <a href="#"><img src="images/06.jpg"></a>
+              </div>
+              <div class="col-md-12 pull-left right">
+                <h4>安装PHP的curl扩展</h4>
+                <p class="summary">中百度链接自动百度链接自动提交用到了curl，而自己安装PHP的时候并没有安装curl模块。通过查询PHP官方文档，得知编译PHP的时候需要带上-with-curl参数，才可以把curl模块编译进去。但是…</p>
+                <p ><i class="fa fa-leaf leaf"></i> php学习&nbsp;&nbsp;&nbsp;
+                  <i class="fa fa-clock-o clock"></i> 2016-04-04&nbsp;&nbsp;&nbsp;
+                  <i class="fa fa-comment-o comment"></i> 评论（32）&nbsp;&nbsp;&nbsp;
+                  <i class="fa fa-eye eye"></i>浏览（323）&nbsp;&nbsp;&nbsp;
+                <a class="pull-right" href="#">阅读原文>></a>
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div class="col-md-3 secondary-block">
+          <div class="hot-article">
+            <div class="head col-md-6">
+              <h3>热门文章</h3>
+            </div>
+            <div class="col-md-12 body">
+              <ul>
+                <li>博客中百度链接自动提交用到了</li>
+                <li>博客中百度链接自动提交用到了</li>
+                <li>博客中百度链接自动提交用到了</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+    </div>
+    <footer class="container" id="app-footer">
+      <div class="col-md-4" >
+        <ul>
+          <li style="font-size: 20px;list-style-type: none;margin-bottom: 60px;"><a href="#">关于我</a></li>
+          <li style="font-size: 20px;list-style-type: none;"><a href="#">联系我</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4 hot">
+        <p > 热门标签：</p>
+        <ul class="clone" clone="7">
+          <li><a href="javascript:void(0)">Yii</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4 friendly-link">
+        <p> 友情链接：</p>
+        <ul class="clone" clone="7">
+          <li><a href="#">Yii</a></li>
+        </ul>
+      </div>
+    </footer>
+    <!-- build:js /scripts/app.js -->
+    <script src="vendor/bower/jquery/dist/jquery.js"></script>
+    <script src="vendor/bower/bootstrap/js/transition.js"></script>
+    <script src="vendor/bower/bootstrap/js/modal.js"></script>
+    <script src="vendor/bower/bootstrap/js/carousel.js"></script>
+    <script src="vendor/bower/bootstrap/js/collapse.js"></script>
+    <script src="vendor/bower/bootstrap/js/button.js"></script>
+    <script src="vendor/bower/bootstrap/js/dropdown.js"></script>
+    <script src="vendor/bower/bootstrap/js/tab.js"></script>
+    <script src="vendor/bower/bootstrap/js/tooltip.js"></script>
+    <script src="vendor/bower/bootstrap/js/popover.js"></script>
+    <script src="vendor/bower/bootstrap-extension/dist/js/bootstrap-extension.js"></script>
+    <script src="scripts/tool.js"></script>
+    <!-- endbuild -->
+    <script>
+      Tool.cloneHtml();
+      $('#navbar').sticky({
+        'top': 0
+      });
+    </script>
+  </body>
+</html>

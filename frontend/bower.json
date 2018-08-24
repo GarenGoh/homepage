@@ -1,0 +1,30 @@
+{
+  "name": "frontend",
+  "description": "It`s wqiang.net frontend",
+  "license": "MIT",
+  "homepage": "http://wqiang.net/",
+  "author": {
+    "name": "GarenGoh",
+    "email": "jerry9916@qq.com"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/bower",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "jquery": "^2.2.3",
+    "bootstrap": "^3.3.6",
+    "bootstrap-extension": "^1.0.3",
+    "font-awesome": "^4.6.1",
+    "simditor": "^2.3.6",
+    "jquery-ui": "^1.11.4",
+    "blueimp-file-upload": "^9.12.3",
+    "selectize": "^0.12.1",
+    "simditor-html": "^1.1.1",
+    "simditor-mark": "^1.2.0"
+  }
+}

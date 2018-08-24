@@ -1,0 +1,89 @@
+article {
+  position: relative;
+  height: @article-img-height+14px;
+  margin:10px 0 20px;
+  border-bottom: solid 1px #ddd;
+  @media screen and (max-width: @screen-md) {
+    height: @article-img-height/2.2+8px;
+    margin:6px 0 10px;
+  }
+  &:hover {
+    border-bottom: solid 1px #83AF9B;
+  }
+  .left {
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: @article-img-width;
+    @media screen and (max-width: @screen-md) {
+      width: @article-img-width/2.2;
+    }
+    img {
+      width: 100%;
+      height: @article-img-height;
+      box-shadow: 0 0 6px;
+      border: 1px solid #4985b7;
+      border-radius: 3px;
+      @media screen and (max-width: @screen-md) {
+        height: @article-img-height/2.2;
+      }
+
+    }
+  }
+  .right {
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    padding-left: @article-img-width+20px;
+    @media screen and (max-width: @screen-md) {
+      padding-left: @article-img-width/2.2+10px;
+    }
+    h4 {
+      margin-top: 0;
+      padding-top: 0;
+      color: #5b5b5b;
+      @media screen and (max-width: @screen-md) {
+        line-height: 140%;
+        font-size: 16px;
+        font-weight: 500;
+        height: 42px;
+        overflow: hidden;
+        font-family: 'Microsoft YaHei';
+        margin-bottom: 6px;
+      }
+    }
+    p {
+      @media screen and (max-width: @screen-md) {
+        display: none;
+      }
+      color: @p-color;
+      a {
+        color: @a-color-blue;
+        &:hover {
+          color: @a-color-h;
+        }
+      }
+    }
+    .summary {
+      height: 80px;
+      @media screen and (max-width: @screen-md) {
+        height:20px;
+      }
+      overflow: hidden;
+    }
+    .leaf {
+      color: #01b838
+    }
+    .clock {
+      color: #567efc
+    }
+    .comment {
+      color: #f8b838
+    }
+    .eye {
+      color: #aaa
+    }
+  }
+}
