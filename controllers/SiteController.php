@@ -82,7 +82,7 @@ class SiteController extends BaseController
         Yii::$app->response->format = Response::FORMAT_JSON;
         return [
             'is_end' => $totalCount<=($page*$pageSize)?true:false,
-            'html' => $this->renderPartial('_index-article',['articles' => $articles]),
+            'html' => $this->renderPartial('_index-article',['articles' => $articles, 'is_first_page' => 0]),
             'page' => $page
         ];
     }

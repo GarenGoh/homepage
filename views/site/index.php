@@ -66,7 +66,7 @@ unset($adverts[0]);
             </h4>
         </div>
         <div id="alist">
-            <?=$this->render('_index-article',['articles' => $articles])?>
+            <?=$this->render('_index-article',['articles' => $articles, 'is_first_page' => 1])?>
         </div>
     </div>
 </div>

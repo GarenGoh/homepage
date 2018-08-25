@@ -31,11 +31,11 @@ foreach ($articles as $a) { ?>
                 }
                 ?>&nbsp;&nbsp;&nbsp;
                 <i class="fa fa-clock-o clock"></i> <?= date('Y-m-d', $a->created_at) ?>&nbsp;&nbsp;&nbsp;
-                <i class="fa fa-comment-o comment"></i> 评论（ <span id="<?= 'sourceId::article' . $a->id ?>"
+                <i class="fa fa-comment-o comment"></i> 评论（ <?= $is_first_page ? '<span id="sourceId::article'.$a->id.'"
                                                                   class="cy_cmt_count"></span>
                 <script id="cy_cmt_num"
                         src="http://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cysBHKkOH">
-                </script>
+                </script>' : 0?>
                 ）&nbsp;&nbsp;&nbsp;
                 <i class="fa fa-eye eye"></i>浏览（<?= $a->read_count ?>）&nbsp;&nbsp;&nbsp;
                 <a class="pull-right" href="<?= $a->url ?>">阅读原文>></a>
