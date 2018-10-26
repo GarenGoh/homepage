@@ -21,7 +21,7 @@ $this->registerJs('hljs.initHighlightingOnLoad();', View::POS_END);//代码高�
     <p class="">
         <a class="pull-left home" href="<?= Yii::$app->request->hostInfo ?>">网站首页</a>
         <a class="pull-left cate" href="<?= Url::to(['article/php']) ?>">PHP</a>
-        <span class="pull-right motto">天不随我意，我欲封天，唯一死尔！</span>
+        <span class="pull-right motto">绝不轻言放弃,否则对不起自己!</span>
     </p>
 </div>
 <div class="col-md-9 article"'>
