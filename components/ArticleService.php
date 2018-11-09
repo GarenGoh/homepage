@@ -8,6 +8,10 @@ use yii\base\Component;
 
 class ArticleService extends Component
 {
+    /**
+     * @param array $where
+     * @return \yii\db\ActiveQuery
+     */
     public function search($where = [])
     {
         $fields = ['id', 'category', 'read_count'];

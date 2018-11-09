@@ -1,6 +1,7 @@
 <?php
 namespace app\controllers;
 
+use app\helpers\AppHelper;
 use app\models\Article;
 use Yii;
 

@@ -83,6 +83,9 @@ $config = [
         'noteService' => [
             'class' => 'app\components\NoteService'
         ],
+        'lunarService' => [
+            'class' => 'app\components\LunarService'
+        ],
     ]
 ];
 
