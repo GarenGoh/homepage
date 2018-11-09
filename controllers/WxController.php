@@ -8,12 +8,17 @@ class WxController extends BaseController
 {
     public function actionEvent()
     {
-        $post = Yii::$app->request->getBodyParams();
         $get = Yii::$app->request->getQueryParams();
 
-        AppHelper::log('test', 'post', $post);
-        AppHelper::log('test', 'get', $get);
-        return 9292;
+        $signature = $get['signature'];
+        $echostr = $get['echostr'];
+        $timestamp = $get['timestamp'];
+        $nonce = $get['nonce'];
+        $token = '9292';
+
+        AppHelper::log('test', '$echostr', $echostr);
+
+        return $echostr;
     }
 }
 
