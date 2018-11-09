@@ -13,7 +13,7 @@ class WxController extends BaseController
 
         AppHelper::log('test', 'post', $post);
         AppHelper::log('test', 'get', $get);
-        exit;
+        return 9292;
     }
 }
 
