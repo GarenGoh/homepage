@@ -2,6 +2,7 @@
 namespace app\components;
 
 use app\helpers\AppHelper;
+use app\helpers\ArrayHelper;
 use Yii;
 use yii\base\Component;
 
@@ -29,6 +30,15 @@ class WxService extends Component
             AppHelper::log('test', '$signature', $signature);
             return false;
         }
+    }
+
+    public function getMessage()
+    {
+        $msg = \Yii::$app->request->getRawBody();
+
+        $msg_arr = ArrayHelper::convertXmlToArray($msg);
+
+        return $msg_arr;
     }
 }
 

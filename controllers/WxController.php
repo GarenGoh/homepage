@@ -2,6 +2,7 @@
 namespace app\controllers;
 
 use app\helpers\AppHelper;
+use app\helpers\ArrayHelper;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\ContentNegotiator;
@@ -53,23 +54,29 @@ class WxController extends BaseController
     public function actionEvent()
     {
         $get = Yii::$app->request->getQueryParams();
-        $post = Yii::$app->request->getBodyParams();
+        $post = Yii::$app->request->getRawBody();
         AppHelper::log('test', '$get', $get);
         AppHelper::log('test', '$post', $post);
 
-        $openid = $get['openid'] ?? '';
+        $message = Yii::$app->wxService->getMessage();
+        $toUserName = ArrayHelper::getValue($message, 'ToUserName');
+        $fromUserName = ArrayHelper::getValue($message, 'FromUserName');
+        $type = ArrayHelper::getValue($message, 'MsgType');
+        $contents = '大家好!';
         $time = time();
-        $str =
-            "<xml>
-                <ToUserName>< ![CDATA[wq188226814] ]></ToUserName>
-                <FromUserName>< ![CDATA[$openid] ]></FromUserName>
-                <CreateTime>{$time}</CreateTime>
-                <MsgType>< ![CDATA[text] ]></MsgType>
-                <Content>< ![CDATA[大家好] ]></Content>
-                <MsgId>1234567890123456</MsgId>
-            </xml>";
 
-        return $str;
+        $replay = "<xml>
+            <ToUserName><![CDATA[%s]]></ToUserName>
+            <FromUserName><![CDATA[%s]]></FromUserName>
+            <CreateTime>%s</CreateTime>
+            <MsgType><![CDATA[%s]]></MsgType>
+            <Content><![CDATA[%s]]></Content>
+            </xml>";
+        $result = sprintf($replay, $toUserName, $fromUserName, $time, $type, $contents);
+        echo $result;
+        AppHelper::log('test', '$result', $result);
+
+        exit;
     }
 
 
