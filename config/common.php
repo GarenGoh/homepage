@@ -86,6 +86,9 @@ $config = [
         'lunarService' => [
             'class' => 'app\components\LunarService'
         ],
+        'wxService' => [
+            'class' => 'app\components\WxService'
+        ],
     ]
 ];
 

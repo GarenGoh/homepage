@@ -25,7 +25,7 @@ class WxController extends BaseController
                     ],
                     [
                         'allow' => false,
-                        'denyCallback' => function() {
+                        'denyCallback' => function () {
                             if (\Yii::$app->user->getId()) {
                                 throw new ForbiddenHttpException('您无此操作的权限');
                             } else {
@@ -45,29 +45,34 @@ class WxController extends BaseController
         ];
     }
 
-    public function init(){
+    public function init()
+    {
         $this->enableCsrfValidation = false;
     }
 
     public function actionEvent()
     {
-        Yii::$app->request->enableCsrfValidation = false;
         $get = Yii::$app->request->getQueryParams();
         $post = Yii::$app->request->getBodyParams();
-
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        $signature = $get['signature'] ?? '';
-        $echostr = $get['echostr'] ?? '';
-        $timestamp = $get['timestamp'] ?? '';
-        $nonce = $get['nonce'] ?? '';
-        $token = '9292';
-
         AppHelper::log('test', '$get', $get);
         AppHelper::log('test', '$post', $post);
 
+        $openid = $get['openid'] ?? '';
+        $time = time();
+        $str =
+            "<xml>
+                <ToUserName>< ![CDATA[wq188226814] ]></ToUserName>
+                <FromUserName>< ![CDATA[$openid] ]></FromUserName>
+                <CreateTime>{$time}</CreateTime>
+                <MsgType>< ![CDATA[text] ]></MsgType>
+                <Content>< ![CDATA[大家好] ]></Content>
+                <MsgId>1234567890123456</MsgId>
+            </xml>";
 
-        return '你好!';
+        return $str;
     }
+
+
 }
 
 ?>
