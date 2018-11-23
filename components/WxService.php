@@ -3,8 +3,10 @@ namespace app\components;
 
 use app\helpers\AppHelper;
 use app\helpers\ArrayHelper;
+use app\helpers\SnowFlake;
 use Yii;
 use yii\base\Component;
+use yii\web\User;
 
 class WxService extends Component
 {
@@ -35,10 +37,41 @@ class WxService extends Component
     public function getMessage()
     {
         $msg = \Yii::$app->request->getRawBody();
+        if(isset($message['FromUserName'])){
+            $user =  Yii::$app->userService->search()
+                ->andWhere(['open_id' => $message['FromUserName']])
+                ->limit(1)
+                ->one();
+            if($user){
+                Yii::$app->user = $user;
+            }else{
+
+            }
+        }
 
         $msg_arr = ArrayHelper::convertXmlToArray($msg);
 
         return $msg_arr;
+    }
+
+    public function sendMessage($message, $content)
+    {
+        $toUserName = ArrayHelper::getValue($message, 'ToUserName');
+        $fromUserName = ArrayHelper::getValue($message, 'FromUserName');
+        $type = ArrayHelper::getValue($message, 'MsgType');
+        $time = time();
+
+        $replay = "<xml>
+            <ToUserName><![CDATA[%s]]></ToUserName>
+            <FromUserName><![CDATA[%s]]></FromUserName>
+            <CreateTime>%s</CreateTime>
+            <MsgType><![CDATA[%s]]></MsgType>
+            <Content><![CDATA[%s]]></Content>
+            </xml>";
+        $result = sprintf($replay, $fromUserName, $toUserName, $time, $type, $content);
+        echo $result;
+        AppHelper::log('test', '$result', $result);
+        exit;
     }
 }
 

@@ -37,6 +37,10 @@ class UserService extends Component
         return $result;
     }
 
+    /**
+     * @param array $where
+     * @return \yii\db\ActiveQuery
+     */
     public function search($where = [])
     {
         $query = User::find();
@@ -64,6 +68,10 @@ class UserService extends Component
         return $id ? $id : 0;
     }
 
+    public function wxRegister($message, $email)
+    {
+
+    }
 }
 
 ?>

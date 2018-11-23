@@ -7,6 +7,24 @@ use yii\validators\EmailValidator;
 use \yii\web\IdentityInterface;
 use Yii;
 
+/**
+ * This is the model class for table "user".
+ *
+ * @property integer $id
+ * @property string $username
+ * @property string $name
+ * @property string $email
+ * @property string $open_id
+ * @property integer $is_email_enable
+ * @property string $mobile
+ * @property integer $is_mobile_enable
+ * @property string $password_hash
+ * @property integer $role_id
+ * @property integer $avatar_id
+ * @property integer $is_enable
+ * @property integer $created_at
+ * @property integer $logged_at
+ */
 class User extends BaseActiveRecord implements IdentityInterface
 {
     const ROLE_MEMBER = 0;
@@ -50,6 +68,7 @@ class User extends BaseActiveRecord implements IdentityInterface
         $filterFields = [
             'password', 'name', 'email', 'mobile'
         ];
+
         return [
             [$filterFields, 'filter', 'filter' => function ($value) {
                 return Html::encode(trim($value));//去除左右的空格，并将html标签转换为转义字符
@@ -70,8 +89,9 @@ class User extends BaseActiveRecord implements IdentityInterface
                 return !empty($this->mobile) && !$this->hasErrors();//对比$_mobilePattern
             }],
             ['username', 'default', 'value' => function () {
-                $username = 'W_';
-                $username .= isset($this->email) ? str_replace(array("@", "."), "", $this->email) : rand(10000, 99999);
+
+                $username = 'W_' . ;
+
                 return $username;
             }],
             ['username', 'string', 'length' => [3, 64], 'encoding' => 'utf-8'],
@@ -85,11 +105,19 @@ class User extends BaseActiveRecord implements IdentityInterface
                 return $this->isNewRecord || !empty($this->password);
             }],
             ['is_enable', 'default', 'value' => self::BOOLEAN_YES],
-            [['is_email_enable', 'is_mobile_enable'], 'default', 'value' => '0'],
+            [['is_email_enable', 'is_mobile_enable'], 'default', 'value' => self::BOOLEAN_NO],
             ['created_at', 'default', 'value' => time()],
-            ['avatar_id', 'default', 'value' => array_keys(Yii::$app->params['defaultAvatarIds'])[rand(1, count(Yii::$app->params['defaultAvatarIds']))]],
+            ['avatar_id', 'default', 'value' => array_keys(Yii::$app->params['defaultAvatarIds'])[ rand(1, count(Yii::$app->params['defaultAvatarIds'])) ]],
 
-
+            [['username', 'email', 'password_hash', 'role_id'], 'required'],
+            [['is_email_enable', 'is_mobile_enable', 'role_id', 'avatar_id', 'is_enable', 'created_at', 'logged_at'], 'integer'],
+            [['username', 'name', 'email'], 'string', 'max' => 50],
+            [['open_id'], 'string', 'max' => 40],
+            [['mobile'], 'string', 'max' => 11],
+            [['password_hash'], 'string', 'max' => 64],
+            [['username'], 'unique'],
+            [['email'], 'unique'],
+            [['open_id'], 'unique'],
         ];
     }
 
@@ -118,6 +146,7 @@ class User extends BaseActiveRecord implements IdentityInterface
     public function getAuthKey()
     {
         $key = 'Fuck the user ---> ' . $this->id;
+
         return md5($key);
     }
 
@@ -161,6 +190,7 @@ class User extends BaseActiveRecord implements IdentityInterface
         }
 
         $where = [$attributeName => $account];
+
         return static::find()->andWhere($where)->one();
     }
 
@@ -170,7 +200,8 @@ class User extends BaseActiveRecord implements IdentityInterface
             static::ROLE_MEMBER => '成员',
             static::ROLE_MANAGER => '管理',
         ];
-        return !empty($status) && $map[$status] ? $map[$status] : $map;
+
+        return !empty($status) && $map[ $status ] ? $map[ $status ] : $map;
     }
 
     public function getAvatar()

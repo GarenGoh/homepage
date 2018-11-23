@@ -3,6 +3,7 @@ namespace app\controllers;
 
 use app\helpers\AppHelper;
 use app\helpers\ArrayHelper;
+use app\helpers\SnowFlake;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\ContentNegotiator;
@@ -58,25 +59,31 @@ class WxController extends BaseController
         AppHelper::log('test', '$get', $get);
         AppHelper::log('test', '$post', $post);
 
+
+        //return -1 ^ (-1 << 41);
+
+        $sf = new SnowFlake();
+        return $sf->generateID();
+
+
         $message = Yii::$app->wxService->getMessage();
-        $toUserName = ArrayHelper::getValue($message, 'ToUserName');
-        $fromUserName = ArrayHelper::getValue($message, 'FromUserName');
-        $type = ArrayHelper::getValue($message, 'MsgType');
-        $contents = '大家好!';
-        $time = time();
+        $content = ArrayHelper::getValue($message, 'Content');
+        $content = "我的邮箱:1382342@qq.com";
 
-        $replay = "<xml>
-            <ToUserName><![CDATA[%s]]></ToUserName>
-            <FromUserName><![CDATA[%s]]></FromUserName>
-            <CreateTime>%s</CreateTime>
-            <MsgType><![CDATA[%s]]></MsgType>
-            <Content><![CDATA[%s]]></Content>
-            </xml>";
-        $result = sprintf($replay, $toUserName, $fromUserName, $time, $type, $contents);
-        echo $result;
-        AppHelper::log('test', '$result', $result);
+        $len = mb_strpos($content, ':');
+        if(!$len){
+            $len = mb_strpos($content, '：');
+        }
 
-        exit;
+        if($len && $len<= 6){
+            $str = mb_substr($content, 0, $len);
+            if($str == "我的邮箱"){
+                $email = mb_substr($content, $len+1);
+                Yii::$app->userService->wxRegister($message, $email);
+            }
+        }
+
+
     }
 
 
