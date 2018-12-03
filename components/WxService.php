@@ -110,7 +110,19 @@ class WxService extends Component
 
             $this->sendMessage($user_open_id, $message, $msg_type);
         }else{
-            $this->sendMessage($user_open_id, '大家好!', $msg_type);
+            if(strpos($content, '删除主要工作') !== false){
+                $num = mb_substr($content, 6);
+                $message = Yii::$app->dailyService->delDaily($user_open_id, $num, 1);
+            }elseif(strpos($content, '删除问题') !== false){
+                $num = mb_substr($content, 4);
+                $message = Yii::$app->dailyService->delDaily($user_open_id, $num, 2);
+            }elseif(strpos($content, '删除明日计划') !== false){
+                $num = mb_substr($content, 6);
+                $message = Yii::$app->dailyService->delDaily($user_open_id, $num, 3);
+            }else{
+                $message = '大家好!';
+            }
+            $this->sendMessage($user_open_id, $message, $msg_type);
         }
     }
 
