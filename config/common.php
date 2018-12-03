@@ -68,6 +68,10 @@ $config = [
                 ],
             ],
         ],
+        'snowflake' => [
+            'class' => 'garengoh\snowflake\Snowflake',
+            'epoch_offset' => 1514736000000,   //2018-01-01
+        ],
         'userService' => [
             'class' => 'app\components\UserService'
         ],
@@ -89,9 +93,8 @@ $config = [
         'wxService' => [
             'class' => 'app\components\WxService'
         ],
-        'snowflake' => [
-            'class' => 'garengoh\snowflake\Snowflake',
-            'epoch_offset' => 1514736000000,   //2018-01-01
+        'dailyService' => [
+            'class' => 'garengoh\components\DailyService',
         ]
     ]
 ];
