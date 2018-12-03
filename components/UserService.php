@@ -122,7 +122,12 @@ class UserService extends Component
             ->limit(1)
             ->one();
         if (!$user || !Yii::$app->security->validatePassword($password, $user->password_hash)) {
-            return '绑定成功!';
+            $user->open_id = $open_id;
+            if($user->save()){
+                return '绑定成功!';
+            }else{
+                return $user->getFirstError();
+            }
         }else{
             return '密码错误!';
         }
