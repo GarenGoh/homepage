@@ -47,6 +47,7 @@ class UserService extends Component
         if (isset($where['id']) && $where['id']) {
             $query->andFilterWhere(['id' => $where['id']]);
         }
+
         return $query;
     }
 
@@ -65,6 +66,7 @@ class UserService extends Component
     public function getId()
     {
         $id = Yii::$app->user->getId();
+
         return $id ? $id : 0;
     }
 
@@ -77,26 +79,52 @@ class UserService extends Component
             ->andWhere(['open_id' => $open_id])
             ->limit(1)
             ->one();
-        if($old_user){
-            if($old_user->email != $email){
+        if ($old_user) {
+            if ($old_user->email != $email) {
                 $old_user->email = $email;
-                if($old_user->save()){
+                if ($old_user->save()) {
                     return '更新邮箱成功!';
-                }else{
+                } else {
                     return $old_user->getFirstError();
                 }
-            }else{
+            } else {
                 return '与之前的邮箱相同,不需要修改!';
             }
-        }else {
-            $user = new User();
-            $user->email = $email;
-            $user->open_id = $open_id;
-            if ($user->save()) {
-                return '首次设置邮箱成功!';
+        } else {
+            $old_user = $this->search()
+                ->andWhere(['email' => $email])
+                ->limit(1)
+                ->one();
+            if ($old_user) {
+                Yii::$app->redis->setex($open_id . '_user_id', 3600, $old_user->id);
+                return '该邮箱已注册!请在一小时内回复【密码:123454321】绑定微信!';
             } else {
-                return $user->getFirstError();
+                $user = new User();
+                $user->email = $email;
+                $user->open_id = $open_id;
+                if ($user->save()) {
+                    return '首次设置邮箱成功!';
+                } else {
+                    return $user->getFirstError();
+                }
             }
+        }
+    }
+
+    public function validatePassword($open_id, $password)
+    {
+        $user_id = Yii::$app->redis->get($open_id . '_user_id');
+        /**
+         * @var $user User
+         */
+        $user = Yii::$app->userService->search()
+            ->andWhere(['id' => $user_id])
+            ->limit(1)
+            ->one();
+        if (!$user || !Yii::$app->security->validatePassword($password, $user->password_hash)) {
+            return '绑定成功!';
+        }else{
+            return '密码错误!';
         }
     }
 }

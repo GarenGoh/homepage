@@ -18,10 +18,11 @@ class WxService extends Component
     public function getTitleType($title)
     {
         $all_titles = [
-            'email' => ['我的邮箱', '邮箱', '注册邮箱', 'email'],
-            'problem' => ['problem', 'pr', '问题'],
+            'email' => ['email', '我的邮箱', '邮箱', '注册邮箱'],
             'work' => ['work', 'w', '主要工作', '今日工作'],
-            'plan' => ['plan', 'pl', '明日计划', '计划']
+            'problem' => ['problem', 'pr', '问题'],
+            'plan' => ['plan', 'p', '明日计划', '计划'],
+            'password' => ['password', 'pw', '密码', '我的密码']
         ];
 
         foreach ($all_titles as $type => $titles){
@@ -71,8 +72,6 @@ class WxService extends Component
         $user_open_id = ArrayHelper::getValue($message, 'FromUserName');
         $msg_type = ArrayHelper::getValue($message, 'MsgType');
 
-        //$content = "我的邮箱:test138@qq.com";
-
         //账号处理
         $len = mb_strpos($content, ':');
         if(!$len){
@@ -97,6 +96,9 @@ class WxService extends Component
                         break;
                     case 'plan':
                         $message = Yii::$app->dailyService->generateDaily($user_open_id, $info, 3);
+                        break;
+                    case 'password':
+                        $message = Yii::$app->userService->validatePassword($user_open_id, $info);
                         break;
                     default:
                         $message = '没能识别您想做什么!';
