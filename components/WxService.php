@@ -107,6 +107,8 @@ class WxService extends Component
             }
 
             $this->sendMessage($user_open_id, $message, $msg_type);
+        }else{
+            $this->sendMessage($user_open_id, '大家好!', $msg_type);
         }
     }
 
@@ -121,7 +123,7 @@ class WxService extends Component
             <MsgType><![CDATA[%s]]></MsgType>
             <Content><![CDATA[%s]]></Content>
             </xml>";
-        $result = sprintf($replay, $this->user_name, $open_id, $time, $type, $content);
+        $result = sprintf($replay, $open_id, $this->user_name, $time, $type, $content);
         echo $result;
         AppHelper::log('test', '$result', $result);
         exit;
