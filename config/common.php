@@ -89,6 +89,10 @@ $config = [
         'wxService' => [
             'class' => 'app\components\WxService'
         ],
+        'snowflake' => [
+            'class' => 'garengoh\snowflake\Snowflake',
+            'epoch_offset' => 1514736000000,   //2018-01-01
+        ]
     ]
 ];
 

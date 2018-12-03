@@ -56,34 +56,9 @@ class WxController extends BaseController
     {
         $get = Yii::$app->request->getQueryParams();
         $post = Yii::$app->request->getRawBody();
-        AppHelper::log('test', '$get', $get);
-        AppHelper::log('test', '$post', $post);
-
-
-        //return -1 ^ (-1 << 41);
-
-        $sf = new SnowFlake();
-        return $sf->generateID();
-
-
+        AppHelper::log('wx_event', 'params', ['get' => $get, 'post' => $post]);
         $message = Yii::$app->wxService->getMessage();
-        $content = ArrayHelper::getValue($message, 'Content');
-        $content = "我的邮箱:1382342@qq.com";
-
-        $len = mb_strpos($content, ':');
-        if(!$len){
-            $len = mb_strpos($content, '：');
-        }
-
-        if($len && $len<= 6){
-            $str = mb_substr($content, 0, $len);
-            if($str == "我的邮箱"){
-                $email = mb_substr($content, $len+1);
-                Yii::$app->userService->wxRegister($message, $email);
-            }
-        }
-
-
+        Yii::$app->wxService->processData($message);
     }
 
 

@@ -48,7 +48,7 @@ class User extends BaseActiveRecord implements IdentityInterface
             'id' => 'ID',
             'role_id' => '角色ID',
             'username' => '用户名',
-            'password' => '密码',
+            'password' => '登录密码',
             'password_hash' => '密码',
             'name' => '姓名',
             'email' => '邮箱',
@@ -73,7 +73,8 @@ class User extends BaseActiveRecord implements IdentityInterface
             [$filterFields, 'filter', 'filter' => function ($value) {
                 return Html::encode(trim($value));//去除左右的空格，并将html标签转换为转义字符
             }],
-            [['email', 'role_id'], 'required'],
+            ['email', 'required'],
+            ['role_id', 'default', 'value' => self::ROLE_MEMBER],
             ['role_id', 'in', 'range' => [self::ROLE_MEMBER, self::ROLE_MANAGER]],
             ['email', 'filter', 'filter' => 'strtolower'],//转换为小写
             ['email', 'email', 'when' => function () {
@@ -89,10 +90,7 @@ class User extends BaseActiveRecord implements IdentityInterface
                 return !empty($this->mobile) && !$this->hasErrors();//对比$_mobilePattern
             }],
             ['username', 'default', 'value' => function () {
-
-                $username = 'W_' . ;
-
-                return $username;
+                return Yii::$app->snowflake->generateID();
             }],
             ['username', 'string', 'length' => [3, 64], 'encoding' => 'utf-8'],
             ['username', 'unique', 'when' => function () {
@@ -101,15 +99,12 @@ class User extends BaseActiveRecord implements IdentityInterface
             ['mobile', 'unique', 'when' => function () {
                 return !$this->hasErrors() && !empty($this->mobile);
             }],
-            ['password', 'string', 'length' => [4, 50], 'when' => function () {
-                return $this->isNewRecord || !empty($this->password);
-            }],
+            ['password', 'default', 'value' => (string)rand(10000, 99999)],
+            ['password', 'string', 'length' => [4, 50]],
             ['is_enable', 'default', 'value' => self::BOOLEAN_YES],
             [['is_email_enable', 'is_mobile_enable'], 'default', 'value' => self::BOOLEAN_NO],
             ['created_at', 'default', 'value' => time()],
-            ['avatar_id', 'default', 'value' => array_keys(Yii::$app->params['defaultAvatarIds'])[ rand(1, count(Yii::$app->params['defaultAvatarIds'])) ]],
-
-            [['username', 'email', 'password_hash', 'role_id'], 'required'],
+            ['avatar_id', 'default', 'value' => array_keys(Yii::$app->params['defaultAvatarIds'])[ rand(1, count(Yii::$app->params['defaultAvatarIds']))]],
             [['is_email_enable', 'is_mobile_enable', 'role_id', 'avatar_id', 'is_enable', 'created_at', 'logged_at'], 'integer'],
             [['username', 'name', 'email'], 'string', 'max' => 50],
             [['open_id'], 'string', 'max' => 40],

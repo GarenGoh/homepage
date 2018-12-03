@@ -68,9 +68,34 @@ class UserService extends Component
         return $id ? $id : 0;
     }
 
-    public function wxRegister($message, $email)
+    public function wxRegister($open_id, $email)
     {
-
+        /**
+         * @var $old_user User
+         */
+        $old_user = $this->search()
+            ->andWhere(['open_id' => $open_id])
+            ->limit(1)
+            ->one();
+        if($old_user){
+            if($old_user->email != $email){
+                $old_user->email = $email;
+                if($old_user->save()){
+                    return '更新邮箱成功!';
+                }else{
+                    return $old_user->getFirstError();
+                }
+            }
+        }else {
+            $user = new User();
+            $user->email = $email;
+            $user->open_id = $open_id;
+            if ($user->save()) {
+                return '注册成功!';
+            } else {
+                return $user->getFirstError();
+            }
+        }
     }
 }
 
