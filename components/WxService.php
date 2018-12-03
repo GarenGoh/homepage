@@ -71,7 +71,7 @@ class WxService extends Component
         $user_open_id = ArrayHelper::getValue($message, 'FromUserName');
         $msg_type = ArrayHelper::getValue($message, 'MsgType');
 
-        //$content = "我的邮箱:1382342@qq.com";
+        $content = "我的邮箱:1382342@qq.com";
 
         //账号处理
         $len = mb_strpos($content, ':');

@@ -85,13 +85,15 @@ class UserService extends Component
                 }else{
                     return $old_user->getFirstError();
                 }
+            }else{
+                return '与之前的邮箱相同,不需要修改!';
             }
         }else {
             $user = new User();
             $user->email = $email;
             $user->open_id = $open_id;
             if ($user->save()) {
-                return '注册成功!';
+                return '首次设置邮箱成功!';
             } else {
                 return $user->getFirstError();
             }

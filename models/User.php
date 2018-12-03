@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\helpers\AppHelper;
 use yii\helpers\Html;
 use yii\validators\EmailValidator;
 use \yii\web\IdentityInterface;
@@ -78,6 +79,7 @@ class User extends BaseActiveRecord implements IdentityInterface
             ['role_id', 'in', 'range' => [self::ROLE_MEMBER, self::ROLE_MANAGER]],
             ['email', 'filter', 'filter' => 'strtolower'],//转换为小写
             ['email', 'email', 'when' => function () {
+                AppHelper::log('test', '', Yii::$app->params['defaultAvatarIds']);
                 return !empty($this->email) && !$this->hasErrors();
             }],
             ['email', 'unique', 'when' => function () {//邮箱必须是独一无二的
@@ -104,7 +106,7 @@ class User extends BaseActiveRecord implements IdentityInterface
             ['is_enable', 'default', 'value' => self::BOOLEAN_YES],
             [['is_email_enable', 'is_mobile_enable'], 'default', 'value' => self::BOOLEAN_NO],
             ['created_at', 'default', 'value' => time()],
-            ['avatar_id', 'default', 'value' => array_keys(Yii::$app->params['defaultAvatarIds'])[ rand(1, count(Yii::$app->params['defaultAvatarIds']))]],
+            ['avatar_id', 'default', 'value' => array_keys(Yii::$app->params['defaultAvatarIds'])[ rand(0, count(Yii::$app->params['defaultAvatarIds']) -1)]],
             [['is_email_enable', 'is_mobile_enable', 'role_id', 'avatar_id', 'is_enable', 'created_at', 'logged_at'], 'integer'],
             [['username', 'name', 'email'], 'string', 'max' => 50],
             [['open_id'], 'string', 'max' => 40],
