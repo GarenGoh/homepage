@@ -94,7 +94,7 @@ $config = [
             'class' => 'app\components\WxService'
         ],
         'dailyService' => [
-            'class' => 'garengoh\components\DailyService',
+            'class' => 'app\components\DailyService',
         ]
     ]
 ];
