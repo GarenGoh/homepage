@@ -143,7 +143,7 @@ class WxService extends Component
                             break;
                     }
                     if(isset($type)){
-                        $message = Yii::$app->dailyService->delDaily($user_open_id, $arr[0][1], 'plan');
+                        $message = Yii::$app->dailyService->delDaily($user_open_id, $arr[0][1], $type);
                     }
                 }
             }elseif(in_array($content, ['立即发送', '发送日报'])){
