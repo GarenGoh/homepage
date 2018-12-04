@@ -21,7 +21,7 @@ class WxService extends Component
             'work' => ['work', 'w', '主要工作', '今日工作'],
             'problem' => ['problem', 'pr', '问题'],
             'plan' => ['plan', 'p', '明日计划', '计划'],
-            'email' => ['email', '我的邮箱', '邮箱', '注册邮箱'],
+            'email' => ['email', '我的邮箱', '邮箱', '设置邮箱'],
             'email_password' => ['email_password', 'ep', '邮箱密码'],
             'password' => ['password', 'pw', '密码', '我的密码'],
             'name' => ['name', '名字', '我的名字']
@@ -118,7 +118,7 @@ class WxService extends Component
 
             $this->sendMessage($user_open_id, $message, $msg_type);
         }else{
-            if(strpos($content, '删除主要工作') !== false){
+            if(strpos($content, '删除主要工作') !== false || strpos($content, '删除今日工作') !== false){
                 $num = mb_substr($content, 6);
                 $message = Yii::$app->dailyService->delDaily($user_open_id, $num, 'work');
             }elseif(strpos($content, '删除问题') !== false){
@@ -127,7 +127,30 @@ class WxService extends Component
             }elseif(strpos($content, '删除明日计划') !== false){
                 $num = mb_substr($content, 6);
                 $message = Yii::$app->dailyService->delDaily($user_open_id, $num, 'plan');
-            }else{
+            }elseif(preg_match("/^删除\d\.\d+$/", $content)){
+                preg_match_all("/\d+/", $content, $arr);
+                $message = '没有找到对应的数据!';
+                if(count($arr) == 2){
+                    switch ($arr[0]) {
+                        case 1:
+                            $type = 'work';
+                            break;
+                        case 2:
+                            $type = 'problem';
+                            break;
+                        case 3:
+                            $type = 'plan';
+                            break;
+                    }
+                    if(isset($type)){
+                        $message = Yii::$app->dailyService->delDaily($user_open_id, $arr[1], 'plan');
+                    }
+                }
+            }elseif(in_array($content, ['立即发送', '发送日报'])){
+                $message = Yii::$app->dailyService->send($user_open_id);
+            }elseif($content == "查看日报"){
+                $message = Yii::$app->dailyService->view($user_open_id);
+            } else{
                 $message = '大家好!';
             }
             $this->sendMessage($user_open_id, $message, $msg_type);

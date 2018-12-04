@@ -5,11 +5,18 @@ use app\helpers\AppHelper;
 use app\models\DailyInfo;
 use app\models\User;
 use yii\base\Component;
+use yii\base\Exception;
+use yii\swiftmailer\Mailer;
+use Yii;
 
 class DailyService extends Component
 {
     public $daily_to = ["garen.goh@qq.com" => "Garen"];
 
+    /**
+     * @param array $where
+     * @return \yii\db\ActiveQuery
+     */
     public function search($where = [])
     {
         $fields = ['id', 'user_id', 'send_type'];
@@ -33,13 +40,25 @@ class DailyService extends Component
 
         /**
          * @var $user User
+         * @var $daily_info DailyInfo
          */
         $user = \Yii::$app->userService->search()
             ->andWhere(['open_id' => $open_id])
             ->limit(1)
             ->one();
         if (!$user) {
-            return '你还没有绑定邮箱!';
+            return '没有您的信息,可能是您还没有绑定邮箱!【邮箱:12312@qq.com】';
+        }
+        if (!$user->name) {
+            return '你还没有设置名字!【名字:王三】';
+        }
+
+        $daily_info = Yii::$app->dailyService->search()
+            ->andWhere(['user_id' => $user->id])
+            ->limit(1)
+            ->one();
+        if(!$daily_info->email_password){
+            return '你还没有设置邮箱密码!【邮箱密码:123456】';
         }
 
         $key = $this->getDailyKey($open_id);
@@ -157,7 +176,7 @@ class DailyService extends Component
                 //明日计划
                 $str .= "3. 明日计划:<br>";
                 if (isset($content['plan']) && $content['plan'] && is_array($content['plan'])) {
-                    foreach ($content[3] as $p_key => $item) {
+                    foreach ($content['plan'] as $p_key => $item) {
                         $i = $p_key + 1;
                         $str .= "($i) $item<br>";
                     }
@@ -170,6 +189,97 @@ class DailyService extends Component
         }
 
         return false;
+    }
+
+    /**
+     * @param $open_id
+     * @return string
+     */
+    public function send($open_id)
+    {
+        /**
+         * @var $user User
+         * @var $daily_info DailyInfo
+         */
+        $user = \Yii::$app->userService->search()
+            ->andWhere(['open_id' => $open_id])
+            ->limit(1)
+            ->one();
+        if(!$user){
+            return "没有找到你的信息!";
+        }
+        if(!$user->name){
+            return "你没有设置名字!【名字:王三】";
+        }
+
+        $html = $this->getHtmlContent($open_id);
+        if(!$html){
+            return "您没有设置主要工作!";
+        }
+
+        $daily_info = \Yii::$app->dailyService->search()
+            ->andWhere(['user_id' => $user->id])
+            ->limit(1)
+            ->one();
+        if(!$daily_info->email_password){
+            return "您没有设置邮箱密码!";
+        }
+        $date = date("Ymd");
+        $subject = "【开发日报】{$date}_" . $user->name;
+        /**
+         * @var $mailer Mailer
+         */
+        $mailer = Yii::$app->mailer;
+        $mailer->setTransport([
+            'class' => 'Swift_SmtpTransport',
+            'host' => 'smtp.exmail.qq.com',  //每种邮箱的host配置不一样
+            'port' => '465',
+            'encryption' => 'ssl',
+            'username' => $user->email,
+            'password' => $daily_info->email_password
+        ]);
+        $mail = $mailer->compose();
+        $mail->setCharset('UTF-8'); //设置编码
+        $mail->setFrom([$user->email => $user->name]);    //发送者邮箱
+        $mail->setTo(Yii::$app->dailyService->daily_to);    //接收人邮箱
+        $mail->setSubject($subject);    //邮件标题
+        $mail->setHtmlBody($html);    //发送内容(可写HTML代码)
+        try{
+            if ($mail->send()) {
+                $daily_info->send_type = 0;
+                $daily_info->save();
+
+                return "您的日报发送成功!";
+            } else {
+                return "您的日报发送失败!";
+            }
+        }catch (Exception $e){
+            AppHelper::log('daily', 'send_email_fail', $e->getMessage());
+            return "您的日报发送失败!";
+        }
+    }
+
+    /**
+     * @param $open_id
+     * @return string
+     */
+    public function view($open_id)
+    {
+        /**
+         * @var $user User
+         * @var $daily_info DailyInfo
+         */
+        $user = \Yii::$app->userService->search()
+            ->andWhere(['open_id' => $open_id])
+            ->limit(1)
+            ->one();
+        if(!$user){
+            return "没有找到你的信息!";
+        }
+
+        $html = $this->getHtmlContent($open_id);
+
+        return str_replace('<br>', "\n", $html);
     }
 }
 
