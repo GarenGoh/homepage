@@ -10,8 +10,11 @@ use Yii;
  * @property integer $id
  * @property integer $user_id
  * @property string $email
+ * @property integer $send_type
  * @property string $email_password
  * @property integer $created_at
+ *
+ * @property User $user
  */
 class DailyInfo extends BaseActiveRecord
 {
@@ -48,5 +51,10 @@ class DailyInfo extends BaseActiveRecord
             'email_password' => '邮箱密码',
             'created_at' => '创建时间',
         ];
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }

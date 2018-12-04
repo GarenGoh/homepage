@@ -1,6 +1,7 @@
 <?php
 namespace app\commands;
 
+use app\models\DailyInfo;
 use app\models\User;
 use yii\console\Controller;
 use Yii;
@@ -11,22 +12,21 @@ class DailyController extends Controller
     public function actionSend()
     {
         /**
-         * @var $users User[]
+         * @var $daily_infos DailyInfo[]
          */
-        $users = \Yii::$app->userService->search()
-            ->andWhere(['daily_type' => 1])
+        $daily_infos = \Yii::$app->dailyService->search()
+            ->andWhere(['send_type' => 1])
+            ->with('user')
             ->all();
-        foreach ($users as $user) {
+        foreach ($daily_infos as $daily_info) {
+            $user = $daily_info->user;
             $html = \Yii::$app->dailyService->getHtmlContent($user->open_id);
             if(!$html){
                 echo "用户{$user->name}没有设置主要工作!\n";
                 continue;
             }
 
-            $daily_info = Yii::$app->dailyService->search(['user_id' => $user->id])
-                ->limit(1)
-                ->one();
-            if(!$daily_info){
+            if(!$daily_info->email_password){
                 echo "用户{$user->name}没有设置邮箱密码!\n";
 
                 continue;
@@ -43,7 +43,7 @@ class DailyController extends Controller
                 'port' => '465',
                 'encryption' => 'ssl',
                 'username' => $user->email,
-                'password' => '46663931Wq'
+                'password' => $daily_info->email_password
             ]);
             $mail = $mailer->compose();
             $mail->setCharset('UTF-8'); //设置编码
@@ -51,10 +51,9 @@ class DailyController extends Controller
             $mail->setTo(Yii::$app->dailyService->daily_to);    //接收人邮箱
             $mail->setSubject($subject);    //邮件标题
             $mail->setHtmlBody($html);    //发送内容(可写HTML代码)
-            //var_dump($mail->toString());exit;
             if ($mail->send()) {
-                $user->daily_type = 0;
-                $user->save();
+                $daily_info->send_type = 0;
+                $daily_info->save();
 
                 echo $user->name . "的日报发送成功!\n";
             } else {

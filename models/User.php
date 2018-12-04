@@ -24,7 +24,6 @@ use Yii;
  * @property integer $role_id
  * @property integer $avatar_id
  * @property integer $is_enable
- * @property integer $daily_type
  * @property integer $created_at
  * @property integer $logged_at
  */

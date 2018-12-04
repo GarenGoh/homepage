@@ -12,7 +12,7 @@ class DailyService extends Component
 
     public function search($where = [])
     {
-        $fields = ['id', 'user_id'];
+        $fields = ['id', 'user_id', 'send_type'];
         $query = DailyInfo::find();
         foreach ($fields as $f) {
             if (isset($where[$f])) {
@@ -56,8 +56,7 @@ class DailyService extends Component
         $plan = isset($daily_data_arr[3]) ? $this->getSplicingContent($daily_data_arr[3], "待定\n") : "待定\n";
 
         //标记用户,今天要发日报
-        $user->daily_type = 1;
-        $user->save();
+        DailyInfo::updateAll(['send_type' => 1], ['user_id' => $user->id]);
 
         $to_emails = array_keys($this->daily_to);
         $to = array_shift($to_emails);
@@ -100,9 +99,15 @@ class DailyService extends Component
         $key = $this->getDailyKey($open_id);
         $daily_data = \Yii::$app->redis->get($key);
         $daily_data_arr = json_decode($daily_data, true);
+        AppHelper::log('daily', 'daily_data', $daily_data);
+
+        $num = $num-1;
+        AppHelper::log('test', '$num', $num);
         if(isset($daily_data_arr[ $type ], $daily_data_arr[ $type ][$num]) && $msg = $daily_data_arr[ $type ][$num]){
-            unset($daily_data_arr[ $type ][$num-1]);
+            unset($daily_data_arr[ $type ][$num]);
             $daily_data_arr[ $type ] = array_values($daily_data_arr[ $type ]);
+            AppHelper::log('test', '$daily_data_arr', $daily_data_arr);
+            AppHelper::log('test', '$type', $type);
             $daily_data = json_encode($daily_data_arr);
             $seconds = strtotime('tomorrow') - time();
             \Yii::$app->redis->setex($open_id . $key, $seconds, $daily_data);

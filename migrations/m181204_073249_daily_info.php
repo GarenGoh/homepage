@@ -9,6 +9,7 @@ class m181204_073249_daily_info extends \app\migrations\BaseMigration
             'user_id'           => "int(10)         UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户ID'",
             'email'             => "varchar(50)              NOT NULL COMMENT '邮箱'",
             'email_password'    => "varchar(50)                  NULL COMMENT '邮箱密码'",
+            'send_type'         => "tinyint(1)      UNSIGNED NOT NULL DEFAULT 0 COMMENT '发送状态'",
             'created_at'        => "int(10)         UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间'",
             'PRIMARY KEY `id`(`id`)',
             'UNIQUE KEY `user_id`(`user_id`)'
