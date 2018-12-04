@@ -66,9 +66,13 @@ class UserService extends Component
 
     public function getId()
     {
-        $id = Yii::$app->user->getId();
+        if(Yii::$app->id != "app-console"){
+            $id = Yii::$app->user->getId();
 
-        return $id ? $id : 0;
+            return (int)$id;
+        }
+
+        return 0;
     }
 
     public function wxRegister($open_id, $email)

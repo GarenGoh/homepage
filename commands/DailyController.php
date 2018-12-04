@@ -61,6 +61,5 @@ class DailyController extends Controller
                 echo $user->name . "的日报发送失败\n";
             }
         }
-
     }
 }

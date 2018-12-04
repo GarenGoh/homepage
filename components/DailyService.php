@@ -8,7 +8,7 @@ use yii\base\Component;
 
 class DailyService extends Component
 {
-    public $daily_to = "188226814@qq.com"; //techgroup@alpha-car.cn
+    public $daily_to = ["garen.goh@qq.com" => "Garen"];
 
     public function search($where = [])
     {
@@ -59,7 +59,7 @@ class DailyService extends Component
         $user->daily_type = 1;
         $user->save();
 
-        return sprintf($str, $user->email, $this->daily_to, $work, $problem, $plan);
+        return sprintf($str, $user->email, array_shift(array_keys($this->daily_to)), $work, $problem, $plan);
     }
 
     private function getSplicingContent($contents, $default)
@@ -110,7 +110,7 @@ class DailyService extends Component
             $problem = isset($daily_data_arr[2]) ? $this->getSplicingContent($daily_data_arr[2], "无\n") : "无\n";
             $plan = isset($daily_data_arr[3]) ? $this->getSplicingContent($daily_data_arr[3], "待定\n") : "待定\n";
 
-            return sprintf($str, $user->email, $this->daily_to, $msg, $work, $problem, $plan);
+            return sprintf($str, $user->email, array_shift(array_keys($this->daily_to)), $msg, $work, $problem, $plan);
         }else{
             return "没有找到这条消息!";
         }
