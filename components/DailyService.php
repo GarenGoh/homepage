@@ -30,6 +30,7 @@ class DailyService extends Component
 
     public function generateDaily($open_id, $content, $type)
     {
+
         /**
          * @var $user User
          */
@@ -53,6 +54,10 @@ class DailyService extends Component
         $work = isset($daily_data_arr[1]) ? $this->getSplicingContent($daily_data_arr[1], "\n") : "\n";
         $problem = isset($daily_data_arr[2]) ? $this->getSplicingContent($daily_data_arr[2], "无\n") : "无\n";
         $plan = isset($daily_data_arr[3]) ? $this->getSplicingContent($daily_data_arr[3], "待定\n") : "待定\n";
+
+        //标记用户,今天要发日报
+        $user->daily_type = 1;
+        $user->save();
 
         return sprintf($str, $user->email, $this->daily_to, $work, $problem, $plan);
     }
