@@ -130,8 +130,8 @@ class WxService extends Component
             }elseif(preg_match("/^删除\d\.\d+$/", $content)){
                 preg_match_all("/\d+/", $content, $arr);
                 $message = '没有找到对应的数据!';
-                if(count($arr) == 2){
-                    switch ($arr[0]) {
+                if(isset($arr[0]) && count($arr[0]) == 2){
+                    switch ($arr[0][0]) {
                         case 1:
                             $type = 'work';
                             break;
@@ -143,7 +143,7 @@ class WxService extends Component
                             break;
                     }
                     if(isset($type)){
-                        $message = Yii::$app->dailyService->delDaily($user_open_id, $arr[1], 'plan');
+                        $message = Yii::$app->dailyService->delDaily($user_open_id, $arr[0][1], 'plan');
                     }
                 }
             }elseif(in_array($content, ['立即发送', '发送日报'])){
