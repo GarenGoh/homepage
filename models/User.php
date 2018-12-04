@@ -158,7 +158,7 @@ class User extends BaseActiveRecord implements IdentityInterface
     public function behaviors()
     {
         return [
-            'User' => UserBehavior::className()
+            'user' => UserBehavior::className()
         ];
     }
 

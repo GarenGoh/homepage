@@ -2,6 +2,7 @@
 
 namespace app\Behaviors;
 
+use app\helpers\AppHelper;
 use app\models\DailyInfo;
 use app\models\User;
 use yii\base\Behavior;
@@ -28,17 +29,21 @@ class UserBehavior extends Behavior
             $d_info->email = $user->email;
             $d_info->user_id = $user->id;
             $d_info->created_at = time();
-            $d_info->save();
+            if($d_info->save()){
+                AppHelper::log('user', 'after_insert_daily_save_fail', $d_info->getFirstError());
+            }
         }
     }
 
     public function beforeUpdate($event)
     {
+
         /**
          * @var $user User
          */
         $user = $event->sender;
         $oldAttributes = $user->getOldAttributes();
+
 
         if($oldAttributes['open_id'] != $user->open_id){
             $d_info = \Yii::$app->dailyService->search(['user_id' => $user->id])
@@ -51,7 +56,9 @@ class UserBehavior extends Behavior
             $d_info->email = $user->email;
             $d_info->user_id = $user->id;
             $d_info->created_at = time();
-            $d_info->save();
+            if($d_info->save()){
+                AppHelper::log('user', 'before_update_daily_save_fail', $d_info->getFirstError());
+            }
         }
     }
 }

@@ -30,7 +30,7 @@ class DailyInfo extends BaseActiveRecord
     {
         return [
             [['user_id', 'created_at'], 'integer'],
-            [['email', 'email_password'], 'required'],
+            [['email'], 'required'],
             [['email', 'email_password'], 'string', 'max' => 50],
             ['user_id', 'unique'],
         ];
