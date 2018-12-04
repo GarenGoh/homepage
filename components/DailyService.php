@@ -59,7 +59,9 @@ class DailyService extends Component
         $user->daily_type = 1;
         $user->save();
 
-        return sprintf($str, $user->email, array_shift(array_keys($this->daily_to)), $work, $problem, $plan);
+        $to_emails = array_keys($this->daily_to);
+        $to = array_shift($to_emails);
+        return sprintf($str, $user->email, $to, $work, $problem, $plan);
     }
 
     private function getSplicingContent($contents, $default)
@@ -110,7 +112,9 @@ class DailyService extends Component
             $problem = isset($daily_data_arr[2]) ? $this->getSplicingContent($daily_data_arr[2], "无\n") : "无\n";
             $plan = isset($daily_data_arr[3]) ? $this->getSplicingContent($daily_data_arr[3], "待定\n") : "待定\n";
 
-            return sprintf($str, $user->email, array_shift(array_keys($this->daily_to)), $msg, $work, $problem, $plan);
+            $to_emails = array_keys($this->daily_to);
+            $to = array_shift($to_emails);
+            return sprintf($str, $user->email, $to, $msg, $work, $problem, $plan);
         }else{
             return "没有找到这条消息!";
         }
@@ -164,8 +168,6 @@ class DailyService extends Component
 
         return false;
     }
-
-
 }
 
 ?>
