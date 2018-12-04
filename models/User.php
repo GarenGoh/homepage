@@ -101,8 +101,9 @@ class User extends BaseActiveRecord implements IdentityInterface
             ['mobile', 'unique', 'when' => function () {
                 return !$this->hasErrors() && !empty($this->mobile);
             }],
-            ['password', 'default', 'value' => (string)rand(10000, 99999)],
-            ['password', 'string', 'length' => [4, 50]],
+            ['password', 'string', 'length' => [4, 50], 'when' => function () {
+                return $this->isNewRecord || !empty($this->password);
+            }],
             ['is_enable', 'default', 'value' => self::BOOLEAN_YES],
             [['is_email_enable', 'is_mobile_enable'], 'default', 'value' => self::BOOLEAN_NO],
             ['created_at', 'default', 'value' => time()],

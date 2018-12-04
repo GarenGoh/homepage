@@ -100,9 +100,12 @@ class UserService extends Component
                 Yii::$app->redis->setex($open_id . '_user_id', 3600, $old_user->id);
                 return '该邮箱已注册!请在一小时内回复【密码:123454321】绑定微信!';
             } else {
+                $id = Yii::$app->snowflake->generateID();
                 $user = new User();
                 $user->email = $email;
                 $user->open_id = $open_id;
+                $user->username = $id;
+                $user->password = $id;
                 if ($user->save()) {
                     return '首次设置邮箱成功!';
                 } else {
