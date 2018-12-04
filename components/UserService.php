@@ -1,6 +1,7 @@
 <?php
 namespace app\components;
 
+use app\models\DailyInfo;
 use app\models\User;
 use Yii;
 use yii\base\Component;
@@ -108,6 +109,34 @@ class UserService extends Component
                     return $user->getFirstError();
                 }
             }
+        }
+    }
+
+    public function setEmailPassword($open_id, $e_password)
+    {
+        /**
+         * @var $old_user User
+         */
+        $user = $this->search()
+            ->andWhere(['open_id' => $open_id])
+            ->limit(1)
+            ->one();
+        if ($user) {
+            /**
+             * @var $d_info DailyInfo
+             */
+            $d_info = Yii::$app->dailyService->search(['user_id' => $user->id])
+                ->limit(1)
+                ->one();
+            $d_info->email_password = $e_password;
+            if($d_info->save()){
+                return "设置能够邮箱密码成功!";
+            }else{
+                return $d_info->getFirstError();
+            }
+
+        } else {
+            return "你还没有设置邮箱!";
         }
     }
 

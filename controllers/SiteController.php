@@ -112,8 +112,7 @@ class SiteController extends BaseController
                 $this->error($message);
             }
         }
-        print_r($model);
-        exit;
+
         return $this->render('register', [
             'model' => $model,
         ]);

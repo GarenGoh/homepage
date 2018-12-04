@@ -22,6 +22,7 @@ class WxService extends Component
             'problem' => ['problem', 'pr', '问题'],
             'plan' => ['plan', 'p', '明日计划', '计划'],
             'email' => ['email', '我的邮箱', '邮箱', '注册邮箱'],
+            'email_password' => ['email_password', 'ep', '邮箱密码'],
             'password' => ['password', 'pw', '密码', '我的密码'],
             'name' => ['name', '名字', '我的名字']
         ];
@@ -98,11 +99,14 @@ class WxService extends Component
                     case 'email':
                         $message = Yii::$app->userService->wxRegister($user_open_id, $info);
                         break;
+                    case 'email_password':
+                        $message = Yii::$app->userService->setEmailPassword($user_open_id, $info);
+                        break;
                     case 'password':
                         $message = Yii::$app->userService->validatePassword($user_open_id, $info);
                         break;
                     case 'name':
-                        $message = Yii::$app->userService->wxRegister($user_open_id, $info);
+                        $message = Yii::$app->userService->updateUser($user_open_id, ['name' => $info]);
                         break;
                     default:
                         $message = '没能识别您想做什么!';

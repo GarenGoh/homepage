@@ -156,6 +156,12 @@ class User extends BaseActiveRecord implements IdentityInterface
 
     /* IdentityInterface 实现结束 */
 
+    public function behaviors()
+    {
+        return [
+            'User' => UserBehavior::className()
+        ];
+    }
 
     public function beforeSave($insert)
     {
