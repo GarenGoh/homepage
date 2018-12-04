@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\Behaviors\UserBehavior;
 use app\helpers\AppHelper;
 use yii\helpers\Html;
 use yii\validators\EmailValidator;
@@ -111,9 +112,7 @@ class User extends BaseActiveRecord implements IdentityInterface
             [['open_id'], 'string', 'max' => 40],
             [['mobile'], 'string', 'max' => 11],
             [['password_hash'], 'string', 'max' => 64],
-            [['username'], 'unique'],
-            [['email'], 'unique'],
-            [['open_id'], 'unique'],
+            [['username', 'open_id', 'email'], 'unique'],
         ];
     }
 

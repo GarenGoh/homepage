@@ -10,7 +10,8 @@ class m181204_073249_daily_info extends \app\migrations\BaseMigration
             'email'             => "varchar(50)              NOT NULL COMMENT '邮箱'",
             'email_password'    => "varchar(50)              NOT NULL COMMENT '邮箱密码'",
             'created_at'        => "int(10)         UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间'",
-            'PRIMARY KEY `id`(`id`)'
+            'PRIMARY KEY `id`(`id`)',
+            'UNIQUE KEY `user_id`(`user_id`)'
         ], '日报信息表');
     }
 
