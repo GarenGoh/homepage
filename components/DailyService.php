@@ -278,6 +278,9 @@ class DailyService extends Component
         }
 
         $html = $this->getHtmlContent($open_id);
+        if(!$html){
+            return "您没有设置主要工作!";
+        }
 
         return str_replace('<br>', "\n", $html);
     }
