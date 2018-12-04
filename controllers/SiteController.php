@@ -151,4 +151,17 @@ class SiteController extends BaseController
     {
         return $this->render('about');
     }
+
+    public function actionD()
+    {
+        $mail = Yii::$app->mailer->compose();
+        $mail->setTo('qiang.wu@alpha-car.cn');    //接收人邮箱
+        $mail->setSubject("主体2");    //邮件标题
+        $mail->setHtmlBody("发送内容发送内容发送内容");    //发送内容(可写HTML代码)
+        if ($mail->send()) {
+            echo "成功";
+        } else {
+            echo "失败";
+        }
+    }
 }

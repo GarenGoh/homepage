@@ -121,7 +121,7 @@ class UserService extends Component
             ->andWhere(['id' => $user_id])
             ->limit(1)
             ->one();
-        if (!$user || !Yii::$app->security->validatePassword($password, $user->password_hash)) {
+        if ($user && Yii::$app->security->validatePassword($password, $user->password_hash)) {
             $user->open_id = $open_id;
             if($user->save()){
                 return '绑定成功!';
@@ -129,7 +129,28 @@ class UserService extends Component
                 return $user->getFirstError();
             }
         }else{
-            return '密码错误!';
+            return '与设置邮箱的时间间隔太长或密码错误!';
+        }
+    }
+
+    public function updateUser($open_id, array $params)
+    {
+        /**
+         * @var $user User
+         */
+        $user = Yii::$app->userService->search()
+            ->andWhere(['open_id' => $open_id])
+            ->limit(1)
+            ->one();
+        if($user){
+            $user->setAttributes($params, false);
+            if($user->save()){
+                return "修改成功!";
+            }else{
+                return $user->getFirstError();
+            }
+        }else{
+            return "没有找到你的信息,你可能需要先设置邮箱。";
         }
     }
 }

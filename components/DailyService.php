@@ -7,7 +7,7 @@ use yii\base\Component;
 
 class DailyService extends Component
 {
-    public $daily_to = "188226814@qq.com";
+    public $daily_to = "188226814@qq.com"; //techgroup@alpha-car.cn
 
     public function generateDaily($open_id, $content, $type)
     {
@@ -73,12 +73,13 @@ class DailyService extends Component
         $daily_data = \Yii::$app->redis->get($open_id . '_daily_content');
         $daily_data_arr = json_decode($daily_data, true);
         if(isset($daily_data_arr[ $type ], $daily_data_arr[ $type ][$num]) && $msg = $daily_data_arr[ $type ][$num]){
-            unset($daily_data_arr[ $type ][$num]);
+            unset($daily_data_arr[ $type ][$num-1]);
+            $daily_data_arr[ $type ] = array_values($daily_data_arr[ $type ]);
             $daily_data = json_encode($daily_data_arr);
             $seconds = strtotime('tomorrow') - time();
             \Yii::$app->redis->setex($open_id . '_daily_content', $seconds, $daily_data);
 
-            $str = "from: %s\nto:%s\n\ndel:%s\n\ncontent:\n1. 主要工作\n%s\n2. 问题\n%s\n3. 明天计划\n%s";
+            $str = "del:%s\n\ncontent:\n1. 主要工作\n%s\n2. 问题\n%s\n3. 明天计划\n%s";
             $work = isset($daily_data_arr[1]) ? $this->getSplicingContent($daily_data_arr[1], "\n") : "\n";
             $problem = isset($daily_data_arr[2]) ? $this->getSplicingContent($daily_data_arr[2], "无\n") : "无\n";
             $plan = isset($daily_data_arr[3]) ? $this->getSplicingContent($daily_data_arr[3], "待定\n") : "待定\n";

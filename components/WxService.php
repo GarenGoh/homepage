@@ -18,11 +18,12 @@ class WxService extends Component
     public function getTitleType($title)
     {
         $all_titles = [
-            'email' => ['email', '我的邮箱', '邮箱', '注册邮箱'],
             'work' => ['work', 'w', '主要工作', '今日工作'],
             'problem' => ['problem', 'pr', '问题'],
             'plan' => ['plan', 'p', '明日计划', '计划'],
-            'password' => ['password', 'pw', '密码', '我的密码']
+            'email' => ['email', '我的邮箱', '邮箱', '注册邮箱'],
+            'password' => ['password', 'pw', '密码', '我的密码'],
+            'name' => ['name', '名字', '我的名字']
         ];
 
         foreach ($all_titles as $type => $titles){
@@ -85,9 +86,6 @@ class WxService extends Component
             $type = $this->getTitleType($title);
             if($type){
                 switch ($type){
-                    case 'email':
-                        $message = Yii::$app->userService->wxRegister($user_open_id, $info);
-                        break;
                     case 'work':
                         $message = Yii::$app->dailyService->generateDaily($user_open_id, $info,  1);
                         break;
@@ -97,8 +95,14 @@ class WxService extends Component
                     case 'plan':
                         $message = Yii::$app->dailyService->generateDaily($user_open_id, $info, 3);
                         break;
+                    case 'email':
+                        $message = Yii::$app->userService->wxRegister($user_open_id, $info);
+                        break;
                     case 'password':
                         $message = Yii::$app->userService->validatePassword($user_open_id, $info);
+                        break;
+                    case 'name':
+                        $message = Yii::$app->userService->wxRegister($user_open_id, $info);
                         break;
                     default:
                         $message = '没能识别您想做什么!';
