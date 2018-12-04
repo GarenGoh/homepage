@@ -19,7 +19,7 @@ class DailyController extends Controller
         foreach ($users as $user) {
             $html = \Yii::$app->dailyService->getHtmlContent($user->open_id);
             if(!$html){
-                echo "用户{$user->name}没有设置主要工作!";
+                echo "用户{$user->name}没有设置主要工作!\n";
                 continue;
             }
 
@@ -27,7 +27,7 @@ class DailyController extends Controller
                 ->limit(1)
                 ->one();
             if(!$daily_info){
-                echo "用户{$user->name}没有设置邮箱密码!";
+                echo "用户{$user->name}没有设置邮箱密码!\n";
 
                 continue;
             }
@@ -53,6 +53,9 @@ class DailyController extends Controller
             $mail->setHtmlBody($html);    //发送内容(可写HTML代码)
             //var_dump($mail->toString());exit;
             if ($mail->send()) {
+                $user->daily_type = 0;
+                $user->save();
+
                 echo $user->name . "的日报发送成功!\n";
             } else {
                 echo $user->name . "的日报发送失败\n";

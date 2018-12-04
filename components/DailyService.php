@@ -119,7 +119,10 @@ class DailyService extends Component
     public function getHtmlContent($open_id)
     {
         $key = $this->getDailyKey($open_id);
+        AppHelper::log('daily', 'key', $key);
         $content = \Yii::$app->redis->get($key);
+        AppHelper::log('daily', 'content', $content);
+        $content = json_decode($content, true);
 
         if($content){
             //有"主要工作"才做处理
