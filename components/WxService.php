@@ -52,8 +52,8 @@ class WxService extends Component
         if ($sha == $signature) {
             return true;
         }else {
-            AppHelper::log('test', '$sha', $sha);
-            AppHelper::log('test', '$signature', $signature);
+            AppHelper::log('wx', '$sha', $sha);
+            AppHelper::log('wx', '$signature', $signature);
             return false;
         }
     }
@@ -88,13 +88,13 @@ class WxService extends Component
             if($type){
                 switch ($type){
                     case 'work':
-                        $message = Yii::$app->dailyService->generateDaily($user_open_id, $info,  1);
+                        $message = Yii::$app->dailyService->generateDaily($user_open_id, $info,  'work');
                         break;
                     case 'problem':
-                        $message = Yii::$app->dailyService->generateDaily($user_open_id, $info, 2);
+                        $message = Yii::$app->dailyService->generateDaily($user_open_id, $info, 'problem');
                         break;
                     case 'plan':
-                        $message = Yii::$app->dailyService->generateDaily($user_open_id, $info, 3);
+                        $message = Yii::$app->dailyService->generateDaily($user_open_id, $info, 'plan');
                         break;
                     case 'email':
                         $message = Yii::$app->userService->wxRegister($user_open_id, $info);
@@ -120,13 +120,13 @@ class WxService extends Component
         }else{
             if(strpos($content, '删除主要工作') !== false){
                 $num = mb_substr($content, 6);
-                $message = Yii::$app->dailyService->delDaily($user_open_id, $num, 1);
+                $message = Yii::$app->dailyService->delDaily($user_open_id, $num, 'work');
             }elseif(strpos($content, '删除问题') !== false){
                 $num = mb_substr($content, 4);
-                $message = Yii::$app->dailyService->delDaily($user_open_id, $num, 2);
+                $message = Yii::$app->dailyService->delDaily($user_open_id, $num, 'problem');
             }elseif(strpos($content, '删除明日计划') !== false){
                 $num = mb_substr($content, 6);
-                $message = Yii::$app->dailyService->delDaily($user_open_id, $num, 3);
+                $message = Yii::$app->dailyService->delDaily($user_open_id, $num, 'plan');
             }else{
                 $message = '大家好!';
             }
@@ -147,7 +147,7 @@ class WxService extends Component
             </xml>";
         $result = sprintf($replay, $open_id, $this->user_name, $time, $type, $content);
         echo $result;
-        AppHelper::log('test', '$result', $result);
+        AppHelper::log('wx', 'return_message', $result);
         exit;
     }
 }
