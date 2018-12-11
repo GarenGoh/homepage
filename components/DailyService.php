@@ -123,7 +123,8 @@ class DailyService extends Component
         AppHelper::log('daily', 'daily_data', $daily_data);
 
         $num = $num - 1;
-        if (isset($daily_data_arr[ $type ], $daily_data_arr[ $type ][ $num ]) && $msg = $daily_data_arr[ $type ][ $num ]) {
+        if (isset($daily_data_arr[ $type ], $daily_data_arr[ $type ][ $num ])) {
+            $msg = $daily_data_arr[ $type ][ $num ];
             unset($daily_data_arr[ $type ][ $num ]);
             $daily_data_arr[ $type ] = array_values($daily_data_arr[$type]);
             $daily_data = json_encode($daily_data_arr);
