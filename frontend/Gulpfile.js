@@ -17,22 +17,24 @@ var path = {
 };
 
 gulp.task('less', function () {
-  gulp.src(path.src + 'lesses/*.less')
+  return gulp.src(path.src + 'lesses/*.less')
     .pipe(less())
     .pipe(autoprefixer())
     .pipe(gulp.dest(path.src + 'styles'))
     .pipe(size({title:'less:'}));
 });
 
-gulp.task('useref', ['less'], function () {
-  return gulp.src(path.src + 'test.html')
-    .pipe(useref())
-    .pipe(gulpif('*.js', uglify()))
-    .pipe(gulpif('*.css', csso()))
-    .pipe(gulpif('*.js', gulp.dest(path.dist)))
-    .pipe(gulpif('*.css', gulp.dest(path.dist)))
-    .pipe(size({title:'useref:'}));
-});
+gulp.task('useref',
+  gulp.series('less', function () {
+    return gulp.src(path.src + 'test.html')
+      .pipe(useref())
+      .pipe(gulpif('*.js', uglify()))
+      .pipe(gulpif('*.css', csso()))
+      .pipe(gulpif('*.js', gulp.dest(path.dist)))
+      .pipe(gulpif('*.css', gulp.dest(path.dist)))
+      .pipe(size({title:'useref:'}));
+  })
+);
 
 gulp.task('del', function (callback) {
   var map = [
@@ -42,31 +44,30 @@ gulp.task('del', function (callback) {
 });
 
 gulp.task('copy', function () {
-  gulp.src(path.bower + 'font-awesome/fonts/*')
+  return gulp.src(path.bower + 'font-awesome/fonts/*')
     .pipe(gulp.dest(path.dist + 'fonts'))
     .pipe(size({title:'copyFont:'}));
 });
 
-gulp.task('connect', function () {
-  connect.server({
-    root: path.src,
-    port: 5000,
-    livereload: true
-  });
-});
+gulp.task('connect',
+  gulp.series('less', 'copy',function () {
+      connect.server({
+        root: path.src,
+        port: 5000,
+        livereload: true
+      });
+  })
+);
 
 gulp.task('watch', function () {
-  gulp.watch([path.src + 'lesses/**/*.less'], ['less', 'reload']);
-  gulp.watch([path.src + '*.html'], ['reload']);
+  gulp.watch([path.src + 'lesses/**/*.less'], gulp.series('less', 'reload'));
+  gulp.watch([path.src + '*.html'], gulp.series('reload'));
 });
 
 gulp.task('reload', function () {
-  gulp.src(path.src + '*.html')
+  return gulp.src(path.src + '*.html')
     .pipe(connect.reload());
 });
 
-gulp.task('build', ['del'],function() {
-  return gulp.start('useref','copy');
-});
-
-gulp.task('default', ['less', 'copy', 'connect', 'watch']);
+gulp.task('build', gulp.series('del','useref','copy'));
+gulp.task('default', gulp.parallel('connect', 'watch', 'reload'));

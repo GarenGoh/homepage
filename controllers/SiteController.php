@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\helpers\AppHelper;
 use Yii;
 use app\forms\LoginForm;
 use yii\data\Pagination;
@@ -75,14 +76,15 @@ class SiteController extends BaseController
         $pagination->setPageSize($pageSize);
         $pagination->setPage($page);
 
-        $articles = $query->offset($pageSize*$page)
+        $articles = $query->offset($pageSize * $page)
             ->orderBy(['id' => SORT_DESC])
             ->limit($pagination->limit)
             ->all();
         Yii::$app->response->format = Response::FORMAT_JSON;
+
         return [
-            'is_end' => $totalCount<=($page*$pageSize)?true:false,
-            'html' => $this->renderPartial('_index-article',['articles' => $articles, 'is_first_page' => 0]),
+            'is_end' => $totalCount <= ($page * $pageSize) ? true : false,
+            'html' => $this->renderPartial('_index-article', ['articles' => $articles, 'is_first_page' => 0]),
             'page' => $page
         ];
     }
@@ -97,9 +99,11 @@ class SiteController extends BaseController
             if ($model->submit()) {
                 if (Yii::$app->request->isAjax) {
                     Yii::$app->response->format = Response::FORMAT_JSON;
+
                     return ['status' => true];
                 } else {
                     $this->success('帐号注册成功！');
+
                     return $this->goBack();
                 }
             } else {
@@ -107,6 +111,7 @@ class SiteController extends BaseController
                 if (Yii::$app->request->isAjax) {
                     Yii::$app->response->format = Response::FORMAT_JSON;
                     Yii::$app->response->statusCode = 400;
+
                     return ['status' => false, 'message' => $message];
                 }
                 $this->error($message);
@@ -134,6 +139,7 @@ class SiteController extends BaseController
                 $this->error($message);
             }
         }
+
         return $this->render('login', [
             'model' => $model,
         ]);
@@ -153,14 +159,54 @@ class SiteController extends BaseController
 
     public function actionD()
     {
-        $mail = Yii::$app->mailer->compose();
-        $mail->setTo('qiang.wu@alpha-car.cn');    //接收人邮箱
-        $mail->setSubject("主体2");    //邮件标题
-        $mail->setHtmlBody("发送内容发送内容发送内容");    //发送内容(可写HTML代码)
-        if ($mail->send()) {
-            echo "成功";
-        } else {
-            echo "失败";
+        $url = "http://www.runoob.com/?s=php++函数&page=1";
+
+        $request = Yii::$app->httpClient->createRequest()
+            ->setOptions(['timeout' => 5])
+            //->setContent(json_encode($post, JSON_UNESCAPED_UNICODE))
+            ->setUrl($url)
+            //->setHeaders(['Content-type' => 'application/json'])
+            ->setMethod('GET');
+
+        $content = Yii::$app->httpClient->send($request);
+
+        preg_match_all("/h2.+(http.+?\.html)[\s\S]{1,50}PHP\<\/em\>\ (.+?\(\))\<em\>函数/", $content->content, $data);
+
+        $arr = array_combine($data[2], $data[1]);
+        foreach ($arr as $key => $value) {
+            $data = [];
+            $data['name'] = $key;
+
+            $request = Yii::$app->httpClient->createRequest()
+                ->setOptions(['timeout' => 5])
+                ->setUrl($value)
+                ->setMethod('GET');
+            $content2 = Yii::$app->httpClient->send($request);
+            preg_match_all("/h2.+(http.+?\.html)[\s\S]{1,50}PHP\<\/em\>\ (.+?\(\))\<em\>函数/", $content2->content, $data2);
+
+            $str = str_replace('>', '&gt', $content2->content);
+            $str = str_replace('<', '&lt', $str);
+            echo '<pre>';print_r(
+                $value
+            );echo '</pre>';
+
+            echo '<pre>';
+            print_r(
+                $str
+            );
+            echo '</pre>';
+            exit;
+            $data['name'] = $key;
         }
+
+        $str = str_replace('>', '&gt', $data[0]);
+        $str = str_replace('<', '&lt', $str);
+        echo '<pre>';
+        print_r(
+            $str
+        );
+        echo '</pre>';
+        exit;
+
     }
 }
