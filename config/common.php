@@ -4,6 +4,11 @@ Yii::setAlias('@admin', dirname(__DIR__) . '/module/admin');
 define('ADMIN_NAME', 'admin');
 
 $config = [
+    'bootstrap' => [
+        'queue',
+        'queue1',
+        'queue2',
+    ],
     'language' => 'zh-CN',
     'modules' => [
         /*'test' => [
@@ -70,6 +75,19 @@ $config = [
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
+        ],
+        'queue' => [
+            'class' => 'yii\queue\amqp\Queue',
+            'as log' => 'yii\queue\LogBehavior',//错误日志 默认为 @app/runtime/logs/app.log
+        ],
+        'queue1' => [
+            'class' => 'yii\queue\redis\Queue',
+            'as log' => 'yii\queue\LogBehavior',
+            'redis' => 'redis'
+        ],
+        'queue2' => [
+            'class' => yii\queue\file\Queue::class,
+            'as log' => yii\queue\LogBehavior::class
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
