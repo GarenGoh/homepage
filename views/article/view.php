@@ -112,7 +112,7 @@ $this->registerJs($js, View::POS_END);
                 c.appendChild(b)
             };
             loadJs(
-                "http://changyan.sohu.com/upload/changyan.js",
+                "https://changyan.sohu.com/upload/changyan.js",
                 function () {
                     window.changyan.api.config({
                         appid: appid,

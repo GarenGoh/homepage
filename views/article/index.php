@@ -62,7 +62,7 @@ $hotArticles = Yii::$app->articleService->search()
                     <i class="fa fa-comment-o comment"></i> 评论（ <span id="<?= 'sourceId::article' . $a->id ?>"
                                                                       class="cy_cmt_count"></span>
                     <script id="cy_cmt_num"
-                            src="http://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cysBHKkOH">
+                            src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cysBHKkOH">
                     </script>
                     ）&nbsp;&nbsp;&nbsp;
                     <i class="fa fa-eye eye"></i>浏览（<?= $a->read_count ?>）&nbsp;&nbsp;&nbsp;
