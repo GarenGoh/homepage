@@ -73,7 +73,7 @@ $js = '
                 "bdSelectMiniList":["tsina","qzone","weixin","sqq","mail","fbook","twi","evernotecn"]
             }
         };
-        with(document)0[(getElementsByTagName(\'head\')[0]||body).appendChild(createElement(\'script\')).src=\'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=\'+~(-new Date()/36e5)];
+        with(document)0[(getElementsByTagName(\'head\')[0]||body).appendChild(createElement(\'script\')).src=\'https://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=\'+~(-new Date()/36e5)];
     ';
 $this->registerJs($js, View::POS_END);
 ?>
@@ -88,7 +88,7 @@ $this->registerJs($js, View::POS_END);
         var conf = 'prod_fe99f3618320574ed59a903b3ffcc946';
         var width = window.innerWidth || document.documentElement.clientWidth;
         if (width < 960) {
-            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
         } else {
             var loadJs = function (d, a) {
                 var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
