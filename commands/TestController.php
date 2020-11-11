@@ -34,7 +34,7 @@ class TestController extends Controller
         }
 
         $this->share($id);
-        Yii::$app->redis->setex('domino_event_count' . $id, 60 * 24 * 3600, $count + 1);
+        Yii::$app->redis->setex('domino_event_count_' . $id, 60 * 24 * 3600, $count + 1);
         echo $count + 1, "\n";
 
         return 0;
