@@ -8,51 +8,106 @@ use yii\console\Controller;
 
 class TestController extends Controller
 {
+    public function actionSet($task_id, $limit)
+    {
+        $task_conf = Yii::$app->redis->get('domino_task_conf');
+        if ($task_conf) {
+            $task_conf = json_decode($task_conf, true);
+        } else {
+            $task_conf = [];
+        }
+        // 考虑已经配置过的任务
+        $count = 0;
+        $time = time() + 3 * 24 * 3600;
+        if (isset($task_conf[$task_id])) {
+            // 已刷次数
+            if (isset($task_conf[$task_id]['count'])) {
+                $count = (int)$task_conf[$task_id]['count'];
+            }
+            // 过期时间
+            if (isset($task_conf[$task_id]['time'])) {
+                $time = (int)$task_conf[$task_id]['time'];
+            }
+        }
+
+        $task_conf[$task_id] = [
+            'limit' => $limit,
+            'count' => $count,
+            'time' => $time,
+        ];
+
+        $task_conf = json_encode($task_conf);
+        Yii::$app->redis->setex('domino_task_conf', 10 * 24 * 3600, $task_conf);
+    }
+
     public function actionTask()
     {
+        $now = date('Y-m-d H:i:s');
+        echo "\n------{$now}--------\n";
+        $task_conf = Yii::$app->redis->get('domino_task_conf');
+        if (!$task_conf) {
+            echo "当前没有任务\n";
+            return 0;
+        }
+        echo $task_conf, "\n";
+
+        $task_conf = json_decode($task_conf, true);
+        if(!$task_conf){
+            echo "当前没有任务!\n";
+            return 0;
+        }
+
+        $task_count = count($task_conf);
+        $number = 3 + 2 * $task_count;
         $num = rand(0, 9);
-        if ($num > 3) {
+        if ($num > $number) {
             echo "忽略\n";
             return 0;
         }
 
-        $id = Yii::$app->redis->get('domino_task_id');
-        if (!$id) {
-            echo "没有找到ID\n";
-            return 0;
+        // 随机取一篇
+        $id = array_rand($task_conf);
+        echo "选中{$id}\n";
+        $conf = $task_conf[$id];
+        $remove = 0;
+        if (!isset($conf['limit'], $conf['count'])) {
+            $remove = 1;
+            echo "配置不正确\n";
+        }
+        if ($conf['limit'] <= $conf['count']) {
+            $remove = 1;
+            echo "超出上限\n";
+        }
+        if (isset($conf['time']) && $conf['time'] < time()) {
+            $remove = 1;
+            echo "任务过期\n";
         }
 
-        $limit = Yii::$app->redis->get('domino_task_limit_' . $id);
-        if (!$limit) {
-            $limit = 800 + rand(1, 299);
-        }
-        $count = (int)Yii::$app->redis->get('domino_event_count_' . $id);
+        // 清理任务,并重新处理下一个任务
+        if ($remove) {
+            unset($task_conf[$id]);
+            $task_conf = json_encode($task_conf);
+            Yii::$app->redis->setex('domino_task_conf', 10 * 24 * 3600, $task_conf);
 
-        if ($count > $limit) {
-            echo "达到上限!";
-            return 0;
+            return $this->actionTask();
         }
 
         $this->share($id);
-        Yii::$app->redis->setex('domino_event_count_' . $id, 60 * 24 * 3600, $count + 1);
-        echo $count + 1, "\n";
-
+        $task_conf[$id]['count'] = $conf['count'] + 1;
+        $task_conf = json_encode($task_conf);
+        Yii::$app->redis->setex('domino_task_conf', 10 * 24 * 3600, $task_conf);
         return 0;
     }
 
-    public function actionSet($task_id, $limit)
-    {
-        Yii::$app->redis->setex('domino_task_id', 20 * 24 * 3600, $task_id);
-        Yii::$app->redis->setex('domino_task_limit_' . $task_id, 21 * 24 * 3600, $limit);
-    }
 
     public function share($id)
     {
+        // Header信息
         $user_agent = AppHelper::getFakeUserAgent();
         $ip = AppHelper::getFakeIp();
 
+        // 获取任务标题
         $url = "http://v10.alpha-car.cn/tasks/{$id}?expand=article";
-
         $task = Yii::$app->httpClient->createRequest()
             ->setOptions(['timeout' => 5])
             ->setUrl($url)
@@ -74,7 +129,7 @@ class TestController extends Controller
             }
         }
 
-
+        // 创建事件
         $url = "http://v10.alpha-car.cn/events";
         $post = [
             'action' => 'view',
@@ -99,5 +154,12 @@ class TestController extends Controller
             ->setMethod('POST');
 
         Yii::$app->httpClient->send($request)->getContent();
+
+        $re_rand = rand(9,18);
+        if($re_rand <= 10){
+            echo "重复事件,sleep {$re_rand}s.\n";
+            sleep(rand(8,13));
+            Yii::$app->httpClient->send($request)->getContent();
+        }
     }
 }
