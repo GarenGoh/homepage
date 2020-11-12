@@ -104,7 +104,8 @@ class TestController extends Controller
 
         // 任务超过3个,有概率继续随机增加某任务的UV
         if($number > 9 && rand(0, 9) < 3){
-            $re_rand = sleep(rand(3, 7));
+            $re_rand = rand(3, 7);
+            sleep($re_rand);
             echo "随机增加UV,sleep {$re_rand}s.\n";
             $this->actionTask();
         }
