@@ -105,8 +105,8 @@ class TestController extends Controller
         // 任务超过3个,有概率继续随机增加某任务的UV
         if($number > 9 && rand(0, 9) < 3){
             $re_rand = rand(3, 7);
-            sleep($re_rand);
             echo "随机增加UV,sleep {$re_rand}s.\n";
+            sleep($re_rand);
             $this->actionTask();
         }
 
@@ -172,10 +172,10 @@ class TestController extends Controller
 
         Yii::$app->httpClient->send($request)->getContent();
 
-        $re_rand = rand(9,18);
-        if($re_rand <= 10){
+        $re_rand = rand(6,15);
+        if($re_rand <= 7){
             echo "增加该任务PV并随机某任务增加UV,sleep {$re_rand}s.\n";
-            sleep(rand(6,13));
+            sleep($re_rand);
             Yii::$app->httpClient->send($request)->getContent();
             $this->actionTask();
         }
