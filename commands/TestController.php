@@ -40,10 +40,15 @@ class TestController extends Controller
         Yii::$app->redis->setex('domino_task_conf', 10 * 24 * 3600, $task_conf);
     }
 
+    public $_task_log = false;
+
     public function actionTask()
     {
-        $now = date('Y-m-d H:i:s');
-        echo "\n------{$now}--------\n";
+        if($this->_task_log === false){
+            $this->_task_log = date('Y-m-d H:i:s');
+        }
+
+        echo "\n------{$this->_task_log}--------\n";
         $task_conf = Yii::$app->redis->get('domino_task_conf');
         if (!$task_conf) {
             echo "当前没有任务\n";
@@ -58,7 +63,7 @@ class TestController extends Controller
         }
 
         $task_count = count($task_conf);
-        $number = 3 + 2 * $task_count;
+        $number = 3 + 2 * $task_count;  // 低于3个任务可能不执行
         $num = rand(0, 9);
         if ($num > $number) {
             echo "忽略\n";
@@ -96,6 +101,17 @@ class TestController extends Controller
         $task_conf[$id]['count'] = $conf['count'] + 1;
         $task_conf = json_encode($task_conf);
         Yii::$app->redis->setex('domino_task_conf', 10 * 24 * 3600, $task_conf);
+
+        // 任务超过3个,有概率继续随机增加某任务的UV
+        if($number > 9 && rand(0, 9) < 3){
+            $re_rand = sleep(rand(3, 7));
+            echo "随机增加UV,sleep {$re_rand}s.\n";
+            $this->actionTask();
+        }
+
+        $now = date("Y-m-d H:i:s");
+        echo "------{$this->_task_log}------{$now}------\n";
+
         return 0;
     }
 
@@ -157,9 +173,10 @@ class TestController extends Controller
 
         $re_rand = rand(9,18);
         if($re_rand <= 10){
-            echo "重复事件,sleep {$re_rand}s.\n";
-            sleep(rand(8,13));
+            echo "增加该任务PV并随机某任务增加UV,sleep {$re_rand}s.\n";
+            sleep(rand(6,13));
             Yii::$app->httpClient->send($request)->getContent();
+            $this->actionTask();
         }
     }
 }
