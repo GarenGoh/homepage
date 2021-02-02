@@ -44,7 +44,7 @@ class TestController extends Controller
 
     public function actionTask()
     {
-        if($this->_task_log === false){
+        if ($this->_task_log === false) {
             $this->_task_log = date('Y-m-d H:i:s');
         }
 
@@ -57,7 +57,7 @@ class TestController extends Controller
         echo $task_conf, "\n";
 
         $task_conf = json_decode($task_conf, true);
-        if(!$task_conf){
+        if (!$task_conf) {
             echo "当前没有任务!\n";
             return 0;
         }
@@ -103,7 +103,7 @@ class TestController extends Controller
         Yii::$app->redis->setex('domino_task_conf', 10 * 24 * 3600, $task_conf);
 
         // 任务超过3个,有概率继续随机增加某任务的UV
-        if($number > 9 && rand(0, 9) < 3){
+        if ($number > 9 && rand(0, 9) < 3) {
             $re_rand = rand(3, 13);
             echo "随机增加UV,sleep {$re_rand}s.\n";
             sleep($re_rand);
@@ -172,12 +172,51 @@ class TestController extends Controller
 
         Yii::$app->httpClient->send($request)->getContent();
 
-        $re_rand = rand(6,15);
-        if($re_rand <= 7){
+        $re_rand = rand(6, 15);
+        if ($re_rand <= 7) {
             echo "增加该任务PV并随机某任务增加UV,sleep {$re_rand}s.\n";
             sleep($re_rand);
             Yii::$app->httpClient->send($request)->getContent();
             $this->actionTask();
+        }
+    }
+
+    public function actionYu()
+    {
+        $sql = 'select t.id,t.user_id 
+from task as t
+join article as a on t.article_id = a.id
+join `integral_log` as il on il.data_id = t.id and il.data_type = 15
+where t.user_id in (18405,18426,18491,18757,18833,18849,18855)
+and a.type = 2
+and is_done = 1
+and `is_settled` = 0';
+        $data = Yii::$app->db2->createCommand($sql)->queryAll();
+        foreach ($data as $item) {
+            $key = 'dmn_' . $item['id'];
+            if(Yii::$app->redis->get($key)){
+                //continue;
+            }
+            switch ($item['user_id']) {
+                case 18405: // ll
+                    $count = rand(100, 420);
+                    break;
+                case 18426: // zl
+                    $count = rand(100, 320);
+                    break;
+                case 18491: // dj
+                    $count = rand(100, 220);
+                    break;
+                case 18757: // lj
+                    $count = rand(70, 230);
+                    break;
+                default:
+                    $count = rand(50, 120);
+            }
+            echo "设置任务({$item['id']}):{$count}\n";
+
+            $this->actionSet($item['id'], $count);
+            Yii::$app->redis->setex($key, 60 * 86400, 1);
         }
     }
 }
