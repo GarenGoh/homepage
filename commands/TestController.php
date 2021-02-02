@@ -195,11 +195,11 @@ and `is_settled` = 0';
         foreach ($data as $item) {
             $key = 'dmn_' . $item['id'];
             if(Yii::$app->redis->get($key)){
-                //continue;
+                continue;
             }
             switch ($item['user_id']) {
                 case 18405: // ll
-                    $count = rand(100, 420);
+                    $count = rand(240, 420);
                     break;
                 case 18426: // zl
                     $count = rand(100, 320);
