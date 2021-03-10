@@ -181,7 +181,7 @@ class TestController extends Controller
         }
     }
 
-    public $_user_ids = "18405,18426,18491,18757,18833,18849,18855,18856";
+    public $_user_ids = "18405,18426,18491,18757,18833,18849,18855,18856,18884,18917,18865,18876,18758";
 
     public function actionYu()
     {
