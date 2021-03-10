@@ -181,16 +181,18 @@ class TestController extends Controller
         }
     }
 
+    public $_user_ids = "18405,18426,18491,18757,18833,18849,18855,18856";
+
     public function actionYu()
     {
-        $sql = 'select t.id,t.user_id 
+        $sql = "select t.id,t.user_id 
 from task as t
 join article as a on t.article_id = a.id
 join `integral_log` as il on il.data_id = t.id and il.data_type = 15
-where t.user_id in (18405,18426,18491,18757,18833,18849,18855)
+where t.user_id in ({$this->_user_ids})
 and a.type = 2
 and is_done = 1
-and `is_settled` = 0';
+and `is_settled` = 0";
         $data = Yii::$app->db2->createCommand($sql)->queryAll();
         foreach ($data as $item) {
             $key = 'dmn_' . $item['id'];
@@ -212,6 +214,40 @@ and `is_settled` = 0';
                     break;
                 default:
                     $count = rand(50, 120);
+            }
+            echo "设置任务({$item['id']}):{$count}\n";
+
+            $this->actionSet($item['id'], $count);
+            Yii::$app->redis->setex($key, 60 * 86400, 1);
+        }
+    }
+
+    public function actionYuu()
+    {
+        $sql = "select t.id,f.`click_count` from task as t 
+join article as a on a.id = t.article_id
+join user as u on u.id = t.user_id 
+join fruit as f on f.task_id = t.id
+join `integral_log` as il on il.data_id = t.id and il.data_type = 15
+where u.oem_id = 1
+and f.`click_count` > 10
+and il.`is_settled` = 0
+and a.type = 2
+and u.id not in({$this->_user_ids})
+order by f.`click_count` desc
+limit 10";
+        $data = Yii::$app->db2->createCommand($sql)->queryAll();
+        foreach ($data as $item) {
+            $key = 'dmn_' . $item['id'];
+            if(Yii::$app->redis->get($key)){
+                continue;
+            }
+            if($item['click_count'] > 200) {
+                $count = rand(10, 20);
+            }elseif($item['click_count'] > 100){
+                $count = rand(20, 40);
+            }else{
+                $count = rand(40, 80);
             }
             echo "设置任务({$item['id']}):{$count}\n";
 
