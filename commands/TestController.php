@@ -235,7 +235,7 @@ and il.`is_settled` = 0
 and a.type = 2
 and u.id not in({$this->_user_ids})
 order by f.`click_count` desc
-limit 10";
+limit 20";
         $data = Yii::$app->db2->createCommand($sql)->queryAll();
         foreach ($data as $item) {
             $key = 'dmn_' . $item['id'];
