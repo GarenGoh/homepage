@@ -247,7 +247,7 @@ limit 20";
             }elseif($item['click_count'] > 100){
                 $count = rand(20, 40);
             }else{
-                $count = rand(40, 80);
+                $count = rand(20, 80);
             }
             echo "设置任务({$item['id']}):{$count}\n";
 
