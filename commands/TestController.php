@@ -207,13 +207,13 @@ and `is_settled` = 0";
                     $count = rand(100, 320);
                     break;
                 case 18491: // dj
-                    $count = rand(100, 220);
+                    $count = rand(100, 250);
                     break;
                 case 18757: // lj
-                    $count = rand(70, 230);
+                    $count = rand(70, 250);
                     break;
                 default:
-                    $count = rand(50, 120);
+                    $count = rand(50, 250);
             }
             echo "设置任务({$item['id']}):{$count}\n";
 
@@ -243,11 +243,11 @@ limit 20";
                 continue;
             }
             if($item['click_count'] > 200) {
-                $count = rand(10, 20);
+                $count = 0;
             }elseif($item['click_count'] > 100){
-                $count = rand(20, 40);
+                $count = rand(0, 40);
             }else{
-                $count = rand(20, 80);
+                $count = rand(10, 50);
             }
             echo "设置任务({$item['id']}):{$count}\n";
 
