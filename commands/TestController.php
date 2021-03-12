@@ -234,6 +234,7 @@ and f.`click_count` > 10
 and il.`is_settled` = 0
 and a.type = 2
 and u.id not in({$this->_user_ids})
+and u.id != 2
 order by f.`click_count` desc
 limit 20";
         $data = Yii::$app->db2->createCommand($sql)->queryAll();
@@ -245,7 +246,7 @@ limit 20";
             if($item['click_count'] > 200) {
                 $count = 0;
             }elseif($item['click_count'] > 100){
-                $count = rand(0, 40);
+                $count = rand(0, 30);
             }else{
                 $count = rand(10, 50);
             }
