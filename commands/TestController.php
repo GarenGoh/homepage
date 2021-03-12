@@ -44,6 +44,7 @@ class TestController extends Controller
 
     public function actionTask()
     {
+        sleep(rand(0, 30));
         if ($this->_task_log === false) {
             $this->_task_log = date('Y-m-d H:i:s');
         }
