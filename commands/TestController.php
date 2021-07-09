@@ -182,7 +182,7 @@ class TestController extends Controller
         }
     }
 
-    public $_user_ids = "18405,18426,18491,18757,18833,18849,18855,18856,18884,18917,18865,18876,18758";
+    public $_user_ids = "18405,18426,18491,18757,18833,18849,18855,18856,18884,18917,18865,18876,18758,59813";
 
     public function actionYu()
     {
@@ -202,13 +202,16 @@ and `is_settled` = 0";
             }
             switch ($item['user_id']) {
                 case 18405: // ll
-                    $count = rand(240, 420);
+                    $count = rand(300, 520);
+                    break;
+                case 59813: // ls
+                    $count = rand(340, 420);
                     break;
                 case 18426: // zl
-                    $count = rand(100, 320);
+                    $count = rand(200, 320);
                     break;
                 case 18491: // dj
-                    $count = rand(100, 250);
+                    $count = rand(200, 250);
                     break;
                 case 18757: // lj
                     $count = rand(70, 250);
